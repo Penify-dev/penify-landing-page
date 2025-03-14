@@ -96,7 +96,7 @@ export const socialIcons: SocialIconsTypes[] = [
   {
     title: "GitHub",
     icon: <IconBrandGithub width={24} />,
-    href: "https://github.com/SingularityX-ai",
+    href: "https://github.com/Penify-dev",
   },
   {
     title: "LinkedIn",
