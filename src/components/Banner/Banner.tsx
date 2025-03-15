@@ -6,6 +6,15 @@ interface CounterTypes {
   repos: number;
 }
 
+/**
+ * A functional component that displays a marketing banner with user and repository statistics.
+ * The component fetches data from an external API to display the number of users and repositories.
+ * It handles loading states and displays a loading indicator while the data is being fetched.
+ *
+ * @returns {JSX.Element} The rendered banner component.
+ *
+ * @throws {Error} Throws an error if the fetch request fails, which is logged to the console.
+ */
 export default function Banner() {
   const [counter, setCounter] = useState<CounterTypes>({
     users: 0,
@@ -14,6 +23,20 @@ export default function Banner() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    /**
+     * Asynchronously retrieves the usage count of users and repositories from the analytics API.
+     *
+     * This function makes a network request to the specified API endpoint to fetch the current count
+     * of users and repositories. Upon a successful response, it updates the state with the retrieved
+     * values and sets the loading state to false. In case of an error during the fetch operation,
+     * it logs the error to the console and ensures that the loading state is also set to false.
+     *
+     * @async
+     * @function getCount
+     * @returns {Promise<void>} A promise that resolves when the operation is complete.
+     *
+     * @throws {Error} Throws an error if the fetch operation fails, which is caught and logged.
+     */
     const getCount = async () => {
       try {
         const response = await fetch(
