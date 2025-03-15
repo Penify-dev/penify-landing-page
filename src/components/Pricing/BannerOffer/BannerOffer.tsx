@@ -1,7 +1,5 @@
 import { CurrencyOptions } from "@/hooks/useCurrencyConversion";
 import Link from "next/link";
-import { Dropwdown } from "@/components/Dropdown/Dropdown";
-import { vendors2 } from "@/utils/teamItems";
 
 interface BannerOfferProps {
   price: number;
@@ -14,28 +12,30 @@ export function BannerOffer({ price, currency, getCurrency }: BannerOfferProps) 
   const currencySymbol = currency === "INR" ? "₹" : "$";
   
   return (
-    <div className="w-full p-6 bg-gradient-to-r from-blue-900 to-indigo-900 rounded-xl shadow-lg">
-      <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-        <div>
-          <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
-            Document your GIT Repository today!
+    <div className="w-full p-8 bg-gradient-to-r from-blue-900 to-indigo-900 rounded-xl shadow-xl">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="text-center md:text-left">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+            One-time payment, complete documentation
           </h2>
-          <p className="text-blue-200">
-            Complete documentation for your entire repository at an affordable price
+          <p className="text-blue-100 text-lg">
+            Get your entire repository documented in minutes, for less than 
+            <span className="font-bold text-white"> {currencySymbol}1</span>
           </p>
         </div>
         
-        <div className="flex flex-col items-center md:items-end gap-3">
-          <div className="text-3xl font-bold text-white">
-            {currencySymbol}{displayPrice} <span className="text-lg opacity-75">one-time</span>
+        <div className="flex flex-col items-center md:items-end gap-4">
+          <div className="flex items-baseline">
+            <span className="text-5xl font-bold text-white">{currencySymbol}{displayPrice}</span>
+            <span className="ml-2 text-xl text-blue-200">one-time</span>
           </div>
           <Link
             href={`https://dashboard.penify.dev/profile/payments?currency=${currency || "USD"}&fullRepo=true`}
-            className="px-8 py-3 bg-white text-blue-900 rounded-lg font-medium hover:bg-blue-100 transition-colors"
+            className="px-10 py-4 bg-white text-blue-900 rounded-lg text-lg font-medium hover:bg-blue-100 transition-colors shadow-lg"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Get Started
+            Document Now
           </Link>
         </div>
       </div>
