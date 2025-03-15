@@ -18,7 +18,7 @@ export function BannerOffer({ price, currency, getCurrency }: BannerOfferProps) 
       <div className="flex flex-col md:flex-row justify-between items-center gap-6">
         <div>
           <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
-            Document your <Dropwdown title="Git" items={vendors2} type="hero" /> Repository today!
+            Document your GIT Repository today!
           </h2>
           <p className="text-blue-200">
             Complete documentation for your entire repository at an affordable price
