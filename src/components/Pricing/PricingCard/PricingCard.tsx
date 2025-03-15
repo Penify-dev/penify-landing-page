@@ -19,6 +19,22 @@ const titleColorMap: Record<string, string> = {
   'Enterprise': 'from-blue-400 to-blue-600',
 };
 
+/**
+ * Renders a pricing card component that displays the plan title, price, features, and a call-to-action button.
+ *
+ * @param {Object} props - The properties for the PricingCard component.
+ * @param {string} props.title - The title of the pricing plan.
+ * @param {number|string} props.price - The price of the plan, which can be a number or a string representation of a number.
+ * @param {boolean} [props.popular=false] - Indicates if the plan is the most popular option.
+ * @param {Array<string>} props.features - A list of features included in the pricing plan.
+ * @param {string} props.currency - The currency code (e.g., 'USD', 'INR') for the price.
+ * @param {string} props.planId - The unique identifier for the pricing plan.
+ * @param {function} props.getCurrency - A function that takes a number and returns a formatted currency string.
+ *
+ * @returns {JSX.Element} The rendered pricing card component.
+ *
+ * @throws {Error} Throws an error if the price cannot be parsed into a number.
+ */
 export function PricingCard({
   title,
   price,
