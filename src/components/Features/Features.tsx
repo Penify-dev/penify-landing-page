@@ -7,6 +7,15 @@ import { useState } from "react";
 import { sendGAEvent } from "@next/third-parties/google";
 import { mp_track_feature_zoom } from "@/lib/mixpanel";
 
+/**
+ * Renders the Features component which displays a list of features categorized and searchable.
+ * This component allows users to filter features by category and search by keywords.
+ * It also provides a zoom functionality to view detailed information about each feature.
+ *
+ * @returns {JSX.Element} The rendered Features component.
+ *
+ * @throws {Error} Throws an error if the feature data is not available or improperly formatted.
+ */
 export default function Features() {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState<string>("");
