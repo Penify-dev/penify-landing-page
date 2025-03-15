@@ -60,7 +60,7 @@ export default function Pricing() {
   useEffect(() => {
     setIsLoading(true);
     getPlanPrice().then((data: PlanTypes) => {
-      if (!data) {
+      if (!Object.keys(data).length) {
         setIsLoading(false);
         return;
       }
@@ -75,12 +75,11 @@ export default function Pricing() {
       // Update plan prices
       const updatedPlans = [...pricingPlans].map(plan => {
         const planKey = plan.planIdPerMonth;
-        if (planKey && planPriceFromAPI[planKey]) {
+        if (planKey && data[planKey]) {
           return { ...plan, price: data[planKey].amount + "" };
         }
         return plan;
       });
-      
       setPricingPlans(updatedPlans);
       setIsLoading(false);
     }).catch(() => {
@@ -89,7 +88,6 @@ export default function Pricing() {
   }, []);
 
   useEffect(() => {
-    console.log("2::: ",{pricingPlans})
     let workingPricingPlans = [...pricingPlans];
     if(Object.keys(planPriceFromAPI).length === 0) {
       // api gateway is not available
