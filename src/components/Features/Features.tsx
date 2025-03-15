@@ -7,6 +7,13 @@ import { useState } from "react";
 import { sendGAEvent } from "@next/third-parties/google";
 import { mp_track_feature_zoom } from "@/lib/mixpanel";
 
+/**
+ * Renders the Features component which displays a list of features categorized for easy navigation.
+ * It includes functionality for searching and filtering features based on user input and selected categories.
+ * The component also supports zooming in on individual features to view more details.
+ *
+ * @returns {JSX.Element} The rendered Features component.
+ */
 export default function Features() {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -43,6 +50,19 @@ export default function Features() {
     return matchesSearch && matchesCategory;
   });
 
+  /**
+   * Handles the zooming of a feature by updating the zoom state and tracking the event.
+   *
+   * This function takes an index as a parameter, sets the zoomed feature based on that index,
+   * and sends tracking events to Google Analytics and Mixpanel for analytics purposes.
+   *
+   * @param {number} index - The index of the feature to zoom in on. This should correspond to
+   *                         the position of the feature in the filteredFeatures array.
+   *
+   * @throws {Error} Throws an error if the index is out of bounds of the filteredFeatures array.
+   *
+   * @returns {void} This function does not return a value.
+   */
   const handleFeatureZoom = (index: number) => {
     setZoomedFeature(index);
     
@@ -55,6 +75,16 @@ export default function Features() {
     mp_track_feature_zoom(filteredFeatures[index].title);
   };
 
+  /**
+   * Resets the zoomed feature to null, effectively closing the zoom view.
+   * This function is typically used in scenarios where a user has zoomed in
+   * on a specific feature and wishes to return to the default view.
+   *
+   * @function closeZoom
+   * @returns {void} This function does not return a value.
+   *
+   * @throws {Error} Throws an error if the zoomed feature cannot be reset.
+   */
   const closeZoom = () => {
     setZoomedFeature(null);
   };
