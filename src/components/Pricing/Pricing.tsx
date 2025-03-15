@@ -43,6 +43,15 @@ const planFeatures = {
 
 type PricingOption = 'oneTime' | 'subscription';
 
+/**
+ * Renders the pricing component that displays available pricing plans and options.
+ * This component handles the fetching of pricing data, manages loading states,
+ * and allows users to select between one-time payment and subscription options.
+ *
+ * @returns {JSX.Element} The rendered pricing section.
+ *
+ * @throws {Error} Throws an error if the API call to fetch pricing data fails.
+ */
 export default function Pricing() {
   const {
     currency,
