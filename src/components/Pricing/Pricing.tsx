@@ -250,8 +250,7 @@ export default function Pricing() {
                     />
                   ))}
                 </div>
-
-                <PlansTable currency={currency} getCurrency={getCurrency} />
+                <FeatureComparison/>
               </div>
             </>
           )}

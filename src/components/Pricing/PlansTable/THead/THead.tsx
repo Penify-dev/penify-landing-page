@@ -3,11 +3,6 @@ import PRICING from "@/utils/pricing.json";
 import Link from "next/link";
 import { Fragment } from "react";
 
-interface THeadProps {
-  currency: CurrencyOptions;
-  getCurrency: (priceInUSD: number) => number;
-}
-
 interface TitleColorMap {
   [key: string]: string;
 }
@@ -19,7 +14,7 @@ const titleColor: TitleColorMap = {
   Enterprise: "text-blue-400",
 };
 
-export function THead({ currency, getCurrency }: THeadProps) {
+export function THead() {
   return (
     <thead className="bg-slate-700 text-slate-400">
 
