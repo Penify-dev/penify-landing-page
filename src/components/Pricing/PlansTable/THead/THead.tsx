@@ -14,6 +14,21 @@ const titleColor: TitleColorMap = {
   Enterprise: "text-blue-400",
 };
 
+/**
+ * Renders a table header (`<thead>`) for a pricing table.
+ * The header includes a title for features and dynamically generates
+ * columns based on the available pricing plans.
+ *
+ * The first column is always labeled "Features". For the "Freemium"
+ * plan, two additional columns are created for "Public GitHub Repo"
+ * and "Private GitHub Repo". For other plans, a single column is created
+ * with the plan's title followed by "GitHub Repo".
+ *
+ * @returns {JSX.Element} A JSX element representing the table header.
+ *
+ * @throws {Error} Throws an error if the pricing plans are not defined
+ * or if there is an issue rendering the table header.
+ */
 export function THead() {
   return (
     <thead className="bg-slate-700 text-slate-400">
