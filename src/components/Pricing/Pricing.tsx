@@ -7,6 +7,7 @@ import PRICING from "@/utils/pricing.json";
 import { PricingCard } from "./PricingCard/PricingCard";
 import { BannerOffer } from "./BannerOffer/BannerOffer";
 import { FeatureComparison } from "./FeatureComparison/FeatureComparison";
+import { PlansTable } from "./PlansTable/PlansTable";
 
 // Feature highlights for each plan
 const planFeatures = {
@@ -250,7 +251,7 @@ export default function Pricing() {
                   ))}
                 </div>
 
-                <FeatureComparison />
+                <PlansTable currency={currency} getCurrency={getCurrency} />
               </div>
             </>
           )}
