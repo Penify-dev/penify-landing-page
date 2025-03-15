@@ -7,6 +7,18 @@ interface BannerOfferProps {
   getCurrency: (priceInUSD: number) => number;
 }
 
+/**
+ * Renders a banner offer component displaying a pricing offer for documentation services.
+ *
+ * @param {Object} props - The properties for the BannerOffer component.
+ * @param {number} props.price - The price of the service.
+ * @param {string} props.currency - The currency code (e.g., "INR", "USD").
+ * @param {function} props.getCurrency - A function to format the price based on the currency.
+ *
+ * @returns {JSX.Element} The rendered banner offer component.
+ *
+ * @throws {Error} Throws an error if the price is not a valid number.
+ */
 export function BannerOffer({ price, currency, getCurrency }: BannerOfferProps) {
   const displayPrice = getCurrency(price);
   const currencySymbol = currency === "INR" ? "₹" : "$";
