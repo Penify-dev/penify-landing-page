@@ -19,6 +19,20 @@ import {
 
 mp_init();
 
+/**
+ * Main application component that initializes the application and handles various side effects.
+ *
+ * This component manages mobile responsiveness, tracks page views and link/button clicks for analytics,
+ * and sets up the necessary meta tags for the application.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {ComponentType} props.Component - The active page component.
+ * @param {Object} props.pageProps - The initial props preloaded for the active page.
+ *
+ * @returns {JSX.Element} The rendered application component.
+ *
+ * @throws {Error} Throws an error if the component fails to render properly.
+ */
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
