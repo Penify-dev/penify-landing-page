@@ -103,10 +103,10 @@
 /* Reserve space for HubSpot widget */
 #hubspot-widget-placeholder {
   position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 110px; 
-  height: 140px;
+  bottom: 20px;
+  right: 20px;
+  width: 120px; 
+  height: 160px;
   z-index: 10;
   pointer-events: none;
 }
@@ -116,6 +116,8 @@
   position: fixed !important;
   bottom: 0 !important;
   right: 0 !important;
+  transition: none !important;
+  z-index: 999 !important;
 }
 
 /* Ensure iframe itself doesn't cause shifts */
@@ -125,6 +127,14 @@
   height: auto !important;
   max-height: 600px !important;
   transition: none !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Handle minimized/expanded states */
+.hubspot-loaded #hubspot-messages-iframe-container {
+  animation: none !important;
+  transform: none !important;
 }
 
 /* For banner number counter - prevent layout shift */
@@ -132,4 +142,5 @@ p strong.min-w-[60px],
 p strong.min-w-[80px] {
   display: inline-block;
   text-align: center;
+  min-height: 1.5em;
 }
