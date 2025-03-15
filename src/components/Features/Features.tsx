@@ -1,13 +1,16 @@
 import { featureItems } from "@/utils/featureItems";
-import { IconExternalLink, IconChevronRight, IconSearch } from "@tabler/icons-react";
+import { IconExternalLink, IconChevronRight, IconSearch, IconX } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Element } from "react-scroll";
 import { useState } from "react";
+import { sendGAEvent } from "@next/third-parties/google";
+import { mp_track_feature_zoom } from "@/lib/mixpanel";
 
 export default function Features() {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [zoomedFeature, setZoomedFeature] = useState<number | null>(null);
   
   const categories = [
     { id: "all", name: "All Features" },
@@ -18,9 +21,10 @@ export default function Features() {
   
   // Map features to categories for filtering
   const featureCategories = {
-    "PR Documentation": "automation",
-    "Documentation Update": "documentation",
-    "Repository Documentation": "documentation",
+    "Full Repository Documentation": "documentation",
+    "Git Diff Documentation Update": "documentation",
+    "Pull Request Documentation": "automation",
+    "Penify CLI": "integration",
     "Architecture Documentation": "documentation",
     "API Documentation": "documentation",
     "Automated Hosting": "integration",
@@ -38,6 +42,22 @@ export default function Features() {
     
     return matchesSearch && matchesCategory;
   });
+
+  const handleFeatureZoom = (index: number) => {
+    setZoomedFeature(index);
+    
+    // Track the zoom event in GA
+    sendGAEvent("feature_interaction", "feature_zoom", {
+      feature_name: filteredFeatures[index].title,
+    });
+    
+    // Track the zoom event in Mixpanel
+    mp_track_feature_zoom(filteredFeatures[index].title);
+  };
+
+  const closeZoom = () => {
+    setZoomedFeature(null);
+  };
 
   return (
     <section>
@@ -103,9 +123,10 @@ export default function Features() {
             {filteredFeatures.map((feature, index) => (
               <div
                 key={`feature-item-${index}`}
-                className="relative group bg-slate-800/40 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 flex flex-col"
+                className="relative group bg-slate-800/40 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 flex flex-col cursor-pointer"
                 data-aos="fade-up"
                 data-aos-delay={100 + (index * 50)}
+                onClick={() => handleFeatureZoom(index)}
               >
                 <div className="relative h-48 overflow-hidden">
                   <Image
@@ -126,8 +147,9 @@ export default function Features() {
                         href={feature.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center h-8 w-8 rounded-full bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white transition-colors"
+                        className="flex items-center justify-center h-8 w-8 rounded-full bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white transition-colors z-10"
                         aria-label="View demo"
+                        onClick={(e) => e.stopPropagation()} // Prevent triggering the card click
                       >
                         <IconExternalLink width={16} />
                       </Link>
@@ -152,13 +174,10 @@ export default function Features() {
                     
                     {feature.children.length > 2 && (
                       <div className="pt-3 mt-2 border-t border-slate-700/50">
-                        <button 
-                          className="text-sm text-blue-400 hover:text-blue-300 flex items-center"
-                          onClick={() => {/* Could expand to show more features */}}
-                        >
+                        <div className="text-sm text-blue-400 flex items-center">
                           +{feature.children.length - 2} more benefits
                           <IconChevronRight className="w-4 h-4 ml-1" />
-                        </button>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -174,6 +193,72 @@ export default function Features() {
           )}
         </div>
       </Element>
+
+      {/* Feature Zoom Modal */}
+      {zoomedFeature !== null && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm" onClick={closeZoom}>
+          <div 
+            className="bg-slate-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+          >
+            <div className="relative h-72 sm:h-96 overflow-hidden">
+              <Image
+                src={filteredFeatures[zoomedFeature].img}
+                alt={`${filteredFeatures[zoomedFeature].title} illustration`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1536px) 100vw, 1536px"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-70"></div>
+              <button 
+                className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+                onClick={closeZoom}
+              >
+                <IconX size={24} />
+              </button>
+            </div>
+            
+            <div className="p-6 sm:p-8">
+              <div className="flex items-center justify-between flex-wrap gap-y-2 mb-6">
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mr-4">
+                  {filteredFeatures[zoomedFeature].title}
+                </h2>
+                
+                {filteredFeatures[zoomedFeature].href && (
+                  <Link
+                    href={filteredFeatures[zoomedFeature].href || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 py-2 px-4 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                  >
+                    View Demo <IconExternalLink width={18} />
+                  </Link>
+                )}
+              </div>
+              
+              <p className="text-lg text-slate-200 mb-8">
+                {filteredFeatures[zoomedFeature].text}
+              </p>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-blue-400 mb-4">All Benefits:</h3>
+                <ul className="space-y-3 mb-6">
+                  {filteredFeatures[zoomedFeature].children.map((benefit, idx) => (
+                    <li
+                      key={`zoomed-benefit-${idx}`}
+                      className="flex items-start gap-3 text-slate-300"
+                    >
+                      <IconChevronRight className="flex-shrink-0 w-5 h-5 mt-0.5 text-blue-500" />
+                      <span>{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

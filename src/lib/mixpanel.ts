@@ -44,3 +44,11 @@ export const mp_track_contact_form = (username: string, email: string) => {
     email,
   });
 };
+
+// New function for feature zoom tracking
+export const mp_track_feature_zoom = (featureName: string) => {
+  mixpanel.track("Feature Zoomed", {
+    feature_name: featureName,
+    timestamp: new Date().toISOString(),
+  });
+};
