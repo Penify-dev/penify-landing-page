@@ -32,6 +32,8 @@ export function PricingCard({
   const priceNumber = price ? parseInt(price) : null;
   const displayPrice = priceNumber !== null ? getCurrency(priceNumber) : null;
   const gradientClass = titleColorMap[title] || 'from-gray-400 to-gray-600';
+
+  console.log({features})
   
   return (
     <div className={`flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow ${

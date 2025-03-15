@@ -55,6 +55,8 @@ export default function Pricing() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
   const [pricingOption, setPricingOption] = useState<PricingOption>('oneTime');
 
+  console.log("1::: ",{pricingPlans})
+
   useEffect(() => {
     setIsLoading(true);
     getPlanPrice().then((data: PlanTypes) => {
@@ -232,13 +234,15 @@ export default function Pricing() {
                 </div>
                 
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-                  {pricingPlans.map((plan, index) => (
+                  {pricingPlans.filter((plan)=>{
+                    return !plan.title.startsWith("Freemium/Private");
+                  }).map((plan, index) => (
                     <PricingCard
                       key={plan.title}
                       title={plan.title}
                       price={plan.price}
                       popular={plan.title === "Pro"}
-                      features={planFeatures[plan.title as keyof typeof planFeatures]}
+                      features={planFeatures[plan.title.split("/")[0] as keyof typeof planFeatures]}
                       currency={currency}
                       planId={billingCycle === 'monthly' ? plan.planIdPerMonth : plan.planIdPerYear}
                       getCurrency={getCurrency}
