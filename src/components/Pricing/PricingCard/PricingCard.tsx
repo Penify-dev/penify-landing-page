@@ -31,10 +31,7 @@ export function PricingCard({
   const currencySymbol = currency === 'INR' ? '₹' : '$';
   const priceNumber = price ? parseInt(price) : null;
   const displayPrice = priceNumber !== null ? getCurrency(priceNumber) : null;
-  const gradientClass = titleColorMap[title] || 'from-gray-400 to-gray-600';
-
-  console.log({features})
-  
+  const gradientClass = titleColorMap[title] || 'from-gray-400 to-gray-600';  
   return (
     <div className={`flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow ${
       popular ? 'border-blue-500 shadow-blue-500/30' : 'border-slate-700'

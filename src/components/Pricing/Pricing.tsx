@@ -1,7 +1,7 @@
 import { Element } from "react-scroll";
 import { CurrencyDropdown } from "./CurrencyDropdown/CurrencyDropdown";
 import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { getPlanPrice, PlanTypes } from "@/api/pricing";
 import PRICING from "@/utils/pricing.json";
 import { PricingCard } from "./PricingCard/PricingCard";
@@ -55,8 +55,7 @@ export default function Pricing() {
   const [fullRepoPrice, setFullRepoPrice] = useState(PRICING.fullRepoPlan.amount);
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
   const [pricingOption, setPricingOption] = useState<PricingOption>('oneTime');
-
-  console.log("1::: ",{pricingPlans})
+  const [planPriceFromAPI, setPlanPriceFromAPI] = useState<PlanTypes>({});
 
   useEffect(() => {
     setIsLoading(true);
@@ -65,6 +64,7 @@ export default function Pricing() {
         setIsLoading(false);
         return;
       }
+      setPlanPriceFromAPI(data);
       
       // Update full repo price
       const fullRepoKey = PRICING.fullRepoPlan.planId;
@@ -75,7 +75,7 @@ export default function Pricing() {
       // Update plan prices
       const updatedPlans = [...pricingPlans].map(plan => {
         const planKey = plan.planIdPerMonth;
-        if (planKey && data[planKey]) {
+        if (planKey && planPriceFromAPI[planKey]) {
           return { ...plan, price: data[planKey].amount + "" };
         }
         return plan;
@@ -87,6 +87,27 @@ export default function Pricing() {
       setIsLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    console.log("2::: ",{pricingPlans})
+    let workingPricingPlans = [...pricingPlans];
+    if(Object.keys(planPriceFromAPI).length === 0) {
+      // api gateway is not available
+      workingPricingPlans = [...PRICING.plans];
+    }
+    const updatedPlans = workingPricingPlans.map(plan => {
+      const planKey = plan.planIdPerMonth;
+      if (billingCycle === 'yearly' && plan.price) {
+        return { ...plan, price: parseInt(parseInt(plan.price)*12*0.8+"") + "" };
+      }
+
+      if (planKey && planPriceFromAPI[planKey]) {
+        return { ...plan, price: planPriceFromAPI[planKey].amount + "" };
+      }
+      return plan;
+    });    
+    setPricingPlans(updatedPlans);
+  }, [billingCycle]);
 
   return (
     <section>
