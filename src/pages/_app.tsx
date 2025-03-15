@@ -113,17 +113,23 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Hubspot analytics */}
+      <GoogleAnalytics gaId="G-NQRNJW5NS7" />
+
+      {/* HubSpot widget container - reserves space */}
+      <div id="hubspot-widget-placeholder"></div>
+      
+      {/* Hubspot analytics - using improved loading strategy */}
       <Script
         type="text/javascript"
         id="hs-script-loader"
         async
         defer
         src="//js-na1.hs-scripts.com/44651459.js"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
+        onLoad={() => {
+          document.body.classList.add('hubspot-loaded');
+        }}
       />
-
-      <GoogleAnalytics gaId="G-NQRNJW5NS7" />
 
       <Component {...pageProps} />
     </Fragment>
