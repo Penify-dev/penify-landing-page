@@ -125,6 +125,23 @@ export default function App({ Component, pageProps }: AppProps) {
 
       <GoogleAnalytics gaId="G-NQRNJW5NS7" />
 
+      {/* HubSpot widget container - reserves space */}
+      <div id="hubspot-widget-placeholder"></div>
+      
+      {/* Hubspot analytics */}
+      <Script
+        type="text/javascript"
+        id="hs-script-loader"
+        async
+        defer
+        src="//js-na1.hs-scripts.com/44651459.js"
+        strategy="lazyOnload"
+        onLoad={() => {
+          // Add a class to body when script is loaded
+          document.body.classList.add('hubspot-loaded');
+        }}
+      />
+
       <Component {...pageProps} />
     </Fragment>
   );

@@ -11,6 +11,7 @@ export default function Banner() {
     users: 0,
     repos: 0,
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getCount = async () => {
@@ -20,8 +21,10 @@ export default function Banner() {
         );
         const { users, repos } = await response.json();
         setCounter({ users, repos });
+        setIsLoading(false);
       } catch (err) {
         console.error("Failed to get response: ", err);
+        setIsLoading(false);
       }
     };
 
@@ -39,9 +42,15 @@ export default function Banner() {
           <div className="flex gap-x-1 sm:items-center">
             <IconStarFilled width={18} color="#ffbc00" />
             <p className="text-center text-sm font-normal text-slate-200 md:text-base xl:text-lg">
-              Trusted globally by <strong> {counter.users}+ users </strong> and
-              Installed on
-              <strong> {counter.repos}+ repositories </strong>
+              Trusted globally by{" "}
+              <strong className="inline-block min-w-[60px] text-center">
+                {isLoading ? "..." : `${counter.users}+`}
+              </strong>{" "}
+              users and Installed on
+              <strong className="inline-block min-w-[80px] text-center">
+                {isLoading ? "..." : `${counter.repos}+`}
+              </strong>{" "}
+              repositories
             </p>
           </div>
 
