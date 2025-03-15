@@ -7,6 +7,17 @@ interface FeatureComparisonProps {
   initiallyOpen?: boolean;
 }
 
+/**
+ * A functional component that renders a feature comparison section.
+ * It includes a button to toggle the visibility of the feature comparison table.
+ *
+ * @param {Object} props - The properties for the component.
+ * @param {boolean} [props.initiallyOpen=false] - Determines if the comparison table is initially open.
+ *
+ * @returns {JSX.Element} The rendered feature comparison component.
+ *
+ * @throws {Error} Throws an error if the component fails to render properly.
+ */
 export function FeatureComparison({ initiallyOpen = false }: FeatureComparisonProps) {
   const [isOpen, setIsOpen] = useState(initiallyOpen);
   
