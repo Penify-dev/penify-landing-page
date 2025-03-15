@@ -30,7 +30,7 @@ export function BannerOffer({ price, currency, getCurrency }: BannerOfferProps) 
             <span className="ml-2 text-xl text-blue-200">/-</span>
           </div>
           <Link
-            href={`https://dashboard.penify.dev/profile/payments?currency=${currency || "USD"}&fullRepo=true`}
+            href={`https://github.com/apps/penify-dev/installations/select_target`}
             className=" px-4 py-4 bg-white text-blue-900 rounded-lg text-lg font-medium hover:bg-blue-100 transition-colors shadow-lg"
             style={{ textAlign: "center" }}
             target="_blank"
