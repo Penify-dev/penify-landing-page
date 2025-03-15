@@ -125,7 +125,7 @@ export default function Features() {
                 key={`feature-item-${index}`}
                 className="relative group bg-slate-800/40 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 flex flex-col cursor-pointer"
                 data-aos="fade-up"
-                data-aos-delay={100 + (index * 50)}
+                data-aos-delay={(100 + (index * 50))+""}
                 onClick={() => handleFeatureZoom(index)}
               >
                 <div className="relative h-48 overflow-hidden">
