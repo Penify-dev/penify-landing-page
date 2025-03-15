@@ -46,6 +46,17 @@ export const mp_track_contact_form = (username: string, email: string) => {
 };
 
 // New function for feature zoom tracking
+/**
+ * Tracks the zoom action on a specific feature using Mixpanel.
+ *
+ * This function sends an event to Mixpanel indicating that a feature has been zoomed in on.
+ * It includes the name of the feature and the current timestamp.
+ *
+ * @param {string} featureName - The name of the feature that has been zoomed.
+ * @throws {Error} Throws an error if the featureName is not provided or is an empty string.
+ *
+ * @returns {void} This function does not return a value.
+ */
 export const mp_track_feature_zoom = (featureName: string) => {
   mixpanel.track("Feature Zoomed", {
     feature_name: featureName,
