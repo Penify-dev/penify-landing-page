@@ -1,7 +1,13 @@
 {
   "plans": [
     {
-      "title": "Freemium",
+      "title": "Freemium/Public Repo",
+      "price": "0",
+      "planIdPerMonth": "",
+      "planIdPerYear": ""
+    },
+    {
+      "title": "Freemium/Private Repo",
       "price": "0",
       "planIdPerMonth": "",
       "planIdPerYear": ""
