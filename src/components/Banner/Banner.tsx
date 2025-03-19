@@ -48,11 +48,11 @@ export default function Banner() {
             <p className="text-center text-sm font-normal text-slate-200 md:text-base xl:text-lg">
               Trusted globally by{" "}
               <strong className="inline-block min-w-[60px] text-center">
-                {isLoading ? "..." : `${counter.users}+`}
+                {isLoading ? "..." : `${counter.users}`}
               </strong>{" "}
               users and Installed on 
               <strong className="inline-block min-w-[80px] text-center">
-                {isLoading ? "..." : `${counter.repos}+`}
+                {isLoading ? "..." : `${counter.repos}`}
               </strong>{" "}
               repositories
             </p>
