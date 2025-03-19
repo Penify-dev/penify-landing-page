@@ -5,6 +5,19 @@ import { vendors } from "@/utils/teamItems";
 import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
 import PRICING from "@/utils/pricing.json";
 
+/**
+ * Hero component that renders a section of the application
+ * focused on automated documentation for software development.
+ *
+ * This component utilizes the `useCurrencyConversion` hook to manage
+ * currency-related state and actions. It displays a promotional message
+ * about automated documentation and provides links for users to get started
+ * and request a demo.
+ *
+ * @returns {JSX.Element} The rendered Hero component.
+ *
+ * @throws {Error} Throws an error if the currency conversion hook fails to initialize.
+ */
 export default function Hero() {
 
   const {
