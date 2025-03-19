@@ -6,6 +6,15 @@ interface CounterTypes {
   repos: number;
 }
 
+/**
+ * A functional component that displays a marketing banner with user and repository statistics.
+ * It fetches the count of users and repositories from an external API and displays them.
+ * The component shows a loading state while the data is being fetched.
+ *
+ * @returns {JSX.Element} The rendered banner component.
+ *
+ * @throws {Error} If the fetch operation fails, an error is logged to the console.
+ */
 export default function Banner() {
   const [counter, setCounter] = useState<CounterTypes>({
     users: 0,
