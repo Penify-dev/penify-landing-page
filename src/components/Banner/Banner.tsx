@@ -41,12 +41,16 @@ export default function Banner() {
         <div className="mb-3 me-4 flex flex-col items-center justify-center gap-2 md:mb-0 md:flex-row md:gap-4">
           <div className="flex gap-x-1 sm:items-center">
             <IconStarFilled width={18} color="#ffbc00" />
+            <IconStarFilled width={18} color="#ffbc00" />
+            <IconStarFilled width={18} color="#ffbc00" />
+            <IconStarFilled width={18} color="#ffbc00" />
+            <IconStarFilled width={18} color="#ffbc00" />
             <p className="text-center text-sm font-normal text-slate-200 md:text-base xl:text-lg">
               Trusted globally by{" "}
               <strong className="inline-block min-w-[60px] text-center">
                 {isLoading ? "..." : `${counter.users}+`}
               </strong>{" "}
-              users and Installed on
+              users and Installed on 
               <strong className="inline-block min-w-[80px] text-center">
                 {isLoading ? "..." : `${counter.repos}+`}
               </strong>{" "}
