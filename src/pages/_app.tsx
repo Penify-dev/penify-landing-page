@@ -8,7 +8,7 @@ import Head from "next/head";
 import { Fragment, useEffect, useState } from "react";
 import AOS from "aos";
 import Script from "next/script";
-import { GoogleAnalytics, sendGAEvent } from "@next/third-parties/google";
+import { sendGAEvent, GoogleAnalytics } from "@next/third-parties/google";
 import { useRouter } from "next/router";
 import {
   mp_init,
@@ -16,12 +16,17 @@ import {
   mp_track_links,
   mp_track_page,
 } from "@/lib/mixpanel";
+// import GoogleAnalytics from "@/utils/GoogleAnalytics";
 
 mp_init();
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Get current URL for canonical and OG tags
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://penify.dev";
+  const currentUrl = `${baseUrl}${router.asPath}`;
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 640);
@@ -83,35 +88,91 @@ export default function App({ Component, pageProps }: AppProps) {
           name="keywords"
           content="Penify.dev, ai docstring, Automated Documentation, GitHub Integration, Source Code Documentation, Intelligent Tracking, Smart Generation, Programming Languages, Python, JavaScript, TypeScript, Java, Kotlin, Real-Time Documentation, Privacy-Focused"
         />
+        
+        {/* Standard Meta Tags */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Penify.dev" />
+        <meta name="language" content="English" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="theme-color" content="#000000" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href={currentUrl} />
 
         {/* Open Graph Tags */}
         <meta
           property="og:title"
           content="Penify.dev | Automated Documentation Generation"
         />
-
         <meta
           property="og:description"
           content="Automate human-like docstring/documentation for Python, Java, TypeScript, JavaScript, Kotlin in GitHub, GitLab, Bitbucket."
         />
-
         <meta property="og:type" content="website" />
-
-        {/*
-
-        // image URL
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:site_name" content="Penify.dev" />
         <meta
           property="og:image"
-          content="https://example.com/about-image.jpg"
+          content={`${baseUrl}/images/penify-og-image.jpg`}
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="en_US" />
+
+        {/* Twitter Card Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@penifydev" />
+        <meta name="twitter:creator" content="@penifydev" />
+        <meta
+          name="twitter:title"
+          content="Penify.dev | Automated Documentation Generation"
+        />
+        <meta
+          name="twitter:description"
+          content="Automate human-like docstring/documentation for Python, Java, TypeScript, JavaScript, Kotlin in GitHub, GitLab, Bitbucket."
+        />
+        <meta
+          name="twitter:image"
+          content={`${baseUrl}/images/penify-og-image.jpg`}
         />
 
-        // canonical URL of your page
-        <meta property="og:url" content="https://your-site.com/about" />
-        */}
-
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Favicon Tags */}
         <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
       </Head>
+
+      {/* JSON-LD Structured Data */}
+      <Script
+        id="json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Penify.dev",
+            "description": "Automate human-like docstring/documentation for Python, Java, TypeScript, JavaScript, Kotlin in GitHub, GitLab, Bitbucket.",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Web",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Penify.dev",
+              "logo": {
+                "@type": "ImageObject",
+                "url": `${baseUrl}/images/logo.png`
+              }
+            }
+          })
+        }}
+      />
 
       <GoogleAnalytics gaId="G-NQRNJW5NS7" />
 
