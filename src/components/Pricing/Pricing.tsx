@@ -124,15 +124,8 @@ export default function Pricing() {
               Simple, transparent pricing
             </h1>
             <p className="max-w-2xl text-center text-slate-400 text-lg mb-8">
-              Choose the plan that fits your needs. All plans include core documentation features.
+              Choose the plan that fits your needs.
             </p>
-            
-            <div className="flex items-center space-x-4">
-              <CurrencyDropdown
-                currency={currency}
-                handleCurrencyChange={handleCurrencyChange}
-              />
-            </div>
           </header>
 
           {/* Pricing Option Tabs */}
