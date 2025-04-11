@@ -15,14 +15,30 @@ import {
   mp_track_btns,
   mp_track_links,
   mp_track_page,
+  mp_identify_user,
+  mp_track_custom_event,
 } from "@/lib/mixpanel";
 // import GoogleAnalytics from "@/utils/GoogleAnalytics";
 
+// Initialize analytics
 mp_init();
+
+// Analytics constants for consistent naming
+const ANALYTICS_EVENTS = {
+  PAGE_VIEW: "page_view",
+  CLICK: "click",
+  SCROLL_DEPTH: "scroll_depth",
+  FEATURE_USAGE: "feature_usage",
+  TIME_ON_PAGE: "time_on_page",
+  FORM_START: "form_start",
+  FORM_COMPLETION: "form_completion",
+  ERROR: "error",
+};
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
+  const [sessionStartTime, setSessionStartTime] = useState<Date | null>(null);
   
   // Get current URL for canonical and OG tags
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://penify.dev";
@@ -41,39 +57,253 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [isMobile]);
 
   useEffect(() => {
+    // Initialize session timing
+    setSessionStartTime(new Date());
+    
     const handleRouteChange = (url: string) => {
-      sendGAEvent("event", "page_view", { page_path: url });
-      mp_track_page(url);
+      // Enhanced page view tracking with more context
+      const routeContext = {
+        page_path: url,
+        page_title: document.title,
+        referrer: document.referrer,
+        device_type: isMobile ? 'mobile' : 'desktop',
+        timestamp: new Date().toISOString(),
+      };
+      
+      // Track in both GA and Mixpanel with consistent data
+      sendGAEvent("event", ANALYTICS_EVENTS.PAGE_VIEW, routeContext);
+      mp_track_page(url, routeContext);
+      
+      // Track time spent on previous page when navigating
+      if (sessionStartTime) {
+        const timeSpentSeconds = (new Date().getTime() - sessionStartTime.getTime()) / 1000;
+        sendGAEvent("event", ANALYTICS_EVENTS.TIME_ON_PAGE, { 
+          seconds: timeSpentSeconds,
+          previous_page: document.referrer || 'direct',
+        });
+        mp_track_custom_event(ANALYTICS_EVENTS.TIME_ON_PAGE, { 
+          seconds: timeSpentSeconds,
+          previous_page: document.referrer || 'direct',
+        });
+        
+        // Reset timer for new page
+        setSessionStartTime(new Date());
+      }
     };
 
     router.events.on("routeChangeComplete", handleRouteChange);
 
     return () => router.events.off("routeChangeComplete", handleRouteChange);
-  }, [router.events]);
+  }, [router.events, sessionStartTime, isMobile]);
 
   useEffect(() => {
+    // Enhanced click tracking with element context
     const handleLinkClick = (event: MouseEvent) => {
-      const target_anchor = event.target as HTMLAnchorElement;
-      const target_button = event.target as HTMLButtonElement;
+      const target = event.target as HTMLElement;
+      const target_anchor = target.closest('a');
+      const target_button = target.closest('button');
+      
+      // Capture click context
+      const clickContext = {
+        element_text: target.textContent?.trim() || '',
+        element_id: target.id || '',
+        element_classes: Array.from(target.classList).join(' ') || '',
+        page_section: findPageSection(target),
+        page_path: router.asPath,
+      };
 
-      if (target_anchor.tagName === "A") {
-        sendGAEvent("event", "click", {
-          click_link: target_anchor.href || target_anchor.textContent,
+      if (target_anchor) {
+        const isExternal = target_anchor.hostname !== window.location.hostname;
+        const linkData = {
+          ...clickContext,
+          href: target_anchor.href,
+          link_text: target_anchor.textContent?.trim() || '',
+          is_external: isExternal,
+        };
+        
+        sendGAEvent("event", ANALYTICS_EVENTS.CLICK, {
+          element_type: "link",
+          ...linkData
         });
-        mp_track_links(target_anchor.href, target_anchor.textContent);
+        mp_track_links(target_anchor.href, target_anchor.textContent, linkData);
       }
 
-      if (target_button.tagName === "BUTTON") {
-        sendGAEvent("event", "click", {
-          click_btn: target_button.textContent,
+      if (target_button) {
+        const buttonData = {
+          ...clickContext,
+          button_text: target_button.textContent?.trim() || '',
+          button_type: target_button.type || '',
+        };
+        
+        sendGAEvent("event", ANALYTICS_EVENTS.CLICK, {
+          element_type: "button",
+          ...buttonData,
         });
-        mp_track_btns(target_button.textContent);
+        mp_track_btns(target_button.textContent, buttonData);
       }
     };
 
     document.addEventListener("click", handleLinkClick);
 
-    return () => document.removeEventListener("click", handleLinkClick);
+    // Add scroll tracking
+    const handleScroll = throttle(() => {
+      const scrollDepth = calculateScrollDepth();
+      if (scrollDepth && scrollDepth % 25 === 0) { // Track at 25%, 50%, 75%, 100%
+        sendGAEvent("event", ANALYTICS_EVENTS.SCROLL_DEPTH, { 
+          depth_percentage: scrollDepth,
+          page_path: router.asPath,
+        });
+        mp_track_custom_event(ANALYTICS_EVENTS.SCROLL_DEPTH, { 
+          depth_percentage: scrollDepth,
+          page_path: router.asPath,
+        });
+      }
+    }, 500);
+
+    document.addEventListener("scroll", handleScroll);
+
+    // Track form interactions
+    const trackFormInteractions = () => {
+      document.querySelectorAll("form").forEach(form => {
+        // Track form start
+        form.addEventListener("focusin", () => {
+          sendGAEvent("event", ANALYTICS_EVENTS.FORM_START, { 
+            form_id: form.id || 'unknown',
+            page_path: router.asPath,
+          });
+          mp_track_custom_event(ANALYTICS_EVENTS.FORM_START, { 
+            form_id: form.id || 'unknown',
+            page_path: router.asPath,
+          });
+        }, { once: true });
+        
+        // Track form submissions
+        form.addEventListener("submit", () => {
+          sendGAEvent("event", ANALYTICS_EVENTS.FORM_COMPLETION, { 
+            form_id: form.id || 'unknown',
+            page_path: router.asPath,
+          });
+          mp_track_custom_event(ANALYTICS_EVENTS.FORM_COMPLETION, { 
+            form_id: form.id || 'unknown',
+            page_path: router.asPath,
+          });
+        });
+      });
+    };
+
+    // Run once on page load and after route changes
+    trackFormInteractions();
+    router.events.on('routeChangeComplete', trackFormInteractions);
+
+    // Track web vitals
+    if ('web-vitals' in window) {
+      import('web-vitals').then(({ getCLS, getFID, getLCP }) => {
+        getCLS(metric => {
+          sendGAEvent('event', 'web-vitals', { 
+            metric_name: 'CLS',
+            value: metric.value,
+          });
+          mp_track_custom_event('web-vitals', {
+            metric_name: 'CLS',
+            value: metric.value,
+          });
+        });
+        getFID(metric => {
+          sendGAEvent('event', 'web-vitals', {
+            metric_name: 'FID',
+            value: metric.value,
+          });
+          mp_track_custom_event('web-vitals', {
+            metric_name: 'FID',
+            value: metric.value,
+          });
+        });
+        getLCP(metric => {
+          sendGAEvent('event', 'web-vitals', {
+            metric_name: 'LCP',
+            value: metric.value,
+          });
+          mp_track_custom_event('web-vitals', {
+            metric_name: 'LCP',
+            value: metric.value,
+          });
+        });
+      });
+    }
+
+    return () => {
+      document.removeEventListener("click", handleLinkClick);
+      document.removeEventListener("scroll", handleScroll);
+      router.events.off('routeChangeComplete', trackFormInteractions);
+    };
+  }, [router]);
+
+  // Helper functions for analytics
+  function findPageSection(element: HTMLElement): string {
+    // Find nearest section, article, div with id or other container
+    const sectionElement = element.closest('section, article, [id], [data-section]');
+    if (sectionElement) {
+      return sectionElement.id || 
+             sectionElement.getAttribute('data-section') || 
+             sectionElement.tagName.toLowerCase();
+    }
+    return 'unknown';
+  }
+
+  function calculateScrollDepth(): number | null {
+    const scrollTop = window.pageYOffset;
+    const winHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    const totalScrollable = docHeight - winHeight;
+    
+    if (totalScrollable <= 0) return null;
+    
+    const scrollPercentage = Math.floor((scrollTop / totalScrollable) * 100);
+    
+    // Return 25, 50, 75, or 100 based on current scroll percentage
+    if (scrollPercentage >= 100) return 100;
+    if (scrollPercentage >= 75) return 75;
+    if (scrollPercentage >= 50) return 50;
+    if (scrollPercentage >= 25) return 25;
+    return null;
+  }
+  
+  function throttle(func: Function, limit: number) {
+    let inThrottle: boolean;
+    return function() {
+      const args = arguments;
+      const context = this;
+      if (!inThrottle) {
+        func.apply(context, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    };
+  }
+
+  // Identify user if authenticated
+  useEffect(() => {
+    // Check if user is authenticated (example)
+    const user = localStorage.getItem('user');
+    if (user) {
+      try {
+        const userData = JSON.parse(user);
+        // Send user identity to mixpanel
+        if (userData.id) {
+          mp_identify_user(userData.id, {
+            email: userData.email,
+            name: userData.name,
+            signup_date: userData.signup_date,
+            plan: userData.plan,
+          });
+          
+          // Set user ID for Google Analytics
+          sendGAEvent('set', 'user_id', userData.id);
+        }
+      } catch (e) {
+        console.error('Error identifying user:', e);
+      }
+    }
   }, []);
 
   return (

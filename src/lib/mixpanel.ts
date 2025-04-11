@@ -1,54 +1,93 @@
-import mixpanel from "mixpanel-browser";
+import mixpanel from 'mixpanel-browser';
 
-// initialize mixpanel
-const mixpanelToken = "70882d5046727180581f744060d7859c";
+const MIXPANEL_TOKEN = "70882d5046727180581f744060d7859c";
 
-export const mp_init = () =>
-  mixpanel.init(mixpanelToken, {
-    track_pageview: false,
-    persistence: "cookie",
-  });
-
-export const mp_track_page = (url: string) => {
-  mixpanel.track_pageview({
-    "Page View": url,
-  });
+export const mp_init = () => {
+  if (MIXPANEL_TOKEN && typeof window !== 'undefined') {
+    mixpanel.init(MIXPANEL_TOKEN, {
+      debug: process.env.NODE_ENV === 'development',
+      track_pageview: false, // We'll handle this manually
+      persistence: 'localStorage',
+      secure_cookie: true,
+    });
+    return true;
+  }
+  return false;
 };
 
-export const mp_track_links = (url: string, text: string | null) => {
-  mixpanel.track_links("a", "Links Clicked", {
-    link_click: url,
-    link_title: text,
-  });
+export const mp_track_page = (url: string, properties = {}) => {
+  if (MIXPANEL_TOKEN && typeof window !== 'undefined') {
+    mixpanel.track('Page View', {
+      url: url,
+      title: document.title,
+      ...properties,
+    });
+  }
 };
 
-export const mp_track_btns = (text: string | null) => {
-  mixpanel.track("Button Clicked", {
-    btn_text: text,
-  });
+export const mp_track_links = (href: string | null, text: string | null, properties = {}) => {
+  if (MIXPANEL_TOKEN && typeof window !== 'undefined') {
+    mixpanel.track('Link Click', {
+      href: href || 'unknown',
+      text: text || 'unknown',
+      ...properties,
+    });
+  }
 };
 
-export const mp_track_scroll_depth = (threshold: string) => {
-  mixpanel.track("Page Scrolled", {
-    threshold,
-  });
+export const mp_track_btns = (text: string | null, properties = {}) => {
+  if (MIXPANEL_TOKEN && typeof window !== 'undefined') {
+    mixpanel.track('Button Click', {
+      text: text || 'unknown',
+      ...properties,
+    });
+  }
 };
 
-export const mp_track_video_play = () => {
-  mixpanel.track("Demo Video View");
+export const mp_identify_user = (userId: string, properties = {}) => {
+  if (MIXPANEL_TOKEN && typeof window !== 'undefined') {
+    mixpanel.identify(userId);
+    
+    // Set user properties
+    if (Object.keys(properties).length > 0) {
+      mixpanel.people.set(properties);
+    }
+  }
 };
 
-export const mp_track_contact_form = (username: string, email: string) => {
-  mixpanel.track_forms("#contact_us", "Contact Form Submitted", {
-    username,
-    email,
-  });
+export const mp_track_custom_event = (eventName: string, properties = {}) => {
+  if (MIXPANEL_TOKEN && typeof window !== 'undefined') {
+    mixpanel.track(eventName, properties);
+  }
 };
 
-// New function for feature zoom tracking
-export const mp_track_feature_zoom = (featureName: string) => {
-  mixpanel.track("Feature Zoomed", {
-    feature_name: featureName,
-    timestamp: new Date().toISOString(),
-  });
+export const mp_register_super_properties = (properties = {}) => {
+  if (MIXPANEL_TOKEN && typeof window !== 'undefined') {
+    mixpanel.register(properties);
+  }
+};
+
+export const mp_increment_property = (property: string, value = 1) => {
+  if (MIXPANEL_TOKEN && typeof window !== 'undefined') {
+    mixpanel.people.increment(property, value);
+  }
+};
+
+export const mp_track_form_submission = (formId: string, formData: Record<string, any>) => {
+  if (MIXPANEL_TOKEN && typeof window !== 'undefined') {
+    // Omit sensitive fields
+    const sanitizedData = { ...formData };
+    const sensitiveFields = ['password', 'credit_card', 'cc', 'cardNumber', 'cvv', 'ssn'];
+    
+    sensitiveFields.forEach(field => {
+      if (field in sanitizedData) {
+        delete sanitizedData[field];
+      }
+    });
+    
+    mixpanel.track('Form Submitted', {
+      form_id: formId,
+      ...sanitizedData,
+    });
+  }
 };
