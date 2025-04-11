@@ -33,8 +33,8 @@ export default function Hero() {
               </h3>
             </div>
 
-            <h1 className="mb-4 md:mb-6 font-bold text-2xl md:text-3xl lg:text-4xl text-slate-200">
-              Automated Documentation for Every Step of the SDLC
+            <h1 className="mb-4 md:mb-6 font-bold text-3xl md:text-4xl lg:text-5xl text-slate-200">
+             Docs Pipeline that set devs up for <span className="text-green-400">+ success</span>
             </h1>
 
             <p className="mb-6 md:mb-8 text-sm text-slate-400 md:text-base lg:text-lg">
