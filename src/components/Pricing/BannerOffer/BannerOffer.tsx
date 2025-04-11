@@ -7,6 +7,18 @@ interface BannerOfferProps {
   getCurrency: (priceInUSD: number) => number;
 }
 
+/**
+ * Renders a banner offer component with dynamic pricing.
+ *
+ * @param {Object} props - The component's properties.
+ * @param {number} props.price - The price of the offer.
+ * @param {string} props.currency - The currency code (e.g., "INR", "USD").
+ * @param {Function} props.getCurrency - A function that takes a price and returns its formatted representation.
+ * @returns {JSX.Element} - The rendered banner offer component.
+ *
+ * @example
+ * <BannerOffer price={10.99} currency="USD" getCurrency={(price) => `$${price.toFixed(2)}`} />
+ */
 export function BannerOffer({ price, currency, getCurrency }: BannerOfferProps) {
   const displayPrice = getCurrency(price);
   const currencySymbol = currency === "INR" ? "₹" : "$";
