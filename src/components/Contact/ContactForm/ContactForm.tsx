@@ -1,4 +1,4 @@
-import { mp_track_contact_form } from "@/lib/mixpanel";
+import { inHouseAnalytics } from "@/utils/gtag";
 import { sendGAEvent } from "@next/third-parties/google";
 import { IconBrandTelegram } from "@tabler/icons-react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -50,7 +50,7 @@ export function ContactForm() {
       });
 
       sendGAEvent("event", "form_submission", { user: data.email });
-      mp_track_contact_form(data.name, data.email)
+      inHouseAnalytics("formSubmission",{ user: data.email })
 
       reset();
     } catch (err) {
