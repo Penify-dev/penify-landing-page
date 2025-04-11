@@ -333,6 +333,21 @@ export default function App({ Component, pageProps }: AppProps) {
     return null;
   }
   
+  /**
+   * Throttles the execution of a function to ensure it is not called more frequently than a specified limit.
+   *
+   * @template T - The type of the function to be throttled.
+   * @param {T} func - The function to be throttled.
+   * @param {number} limit - The time limit in milliseconds within which the function can only be called once.
+   * @returns {(...args: Parameters<T>) => void} - A new function that, when invoked, will throttle the execution of the original function.
+   *
+   * @example
+   * const throttledScrollHandler = throttle(() => {
+   *   console.log('Window scrolled');
+   * }, 200);
+   *
+   * window.addEventListener('scroll', throttledScrollHandler);
+   */
   function throttle<T extends (...args: any[]) => void>(func: T, limit: number): (...args: Parameters<T>) => void {
     let inThrottle = false;
     return (...args: Parameters<T>): void => {
