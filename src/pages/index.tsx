@@ -9,7 +9,6 @@ import Tour from "@/components/Tour/Tour";
 import Hero from "@/components/Hero/Hero";
 import Pricing from "@/components/Pricing/Pricing";
 import { sendGAEvent } from "@next/third-parties/google";
-import { mp_track_scroll_depth } from "@/lib/mixpanel";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,7 +33,6 @@ export default function Home() {
 
       if (scrollDepth >= 0.7 && scrollDepth < 0.72) {
         sendGAEvent("event", "scroll", { threshold: "70%" });
-        mp_track_scroll_depth("70%")
       }
     };
 

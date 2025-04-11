@@ -18,7 +18,9 @@ import {
   mp_identify_user,
   mp_track_custom_event,
 } from "@/lib/mixpanel";
-// import GoogleAnalytics from "@/utils/GoogleAnalytics";
+import { DefaultSeo } from 'next-seo';
+import seoConfig from '@/lib/seo.config';
+import { Graph, Organization, WebSite, WithContext } from 'schema-dts';
 
 // Initialize analytics
 mp_init();
@@ -43,6 +45,55 @@ export default function App({ Component, pageProps }: AppProps) {
   // Get current URL for canonical and OG tags
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://penify.dev";
   const currentUrl = `${baseUrl}${router.asPath}`;
+
+  // Schema.org structured data
+  const organizationSchema: WithContext<Organization> = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Penify.dev",
+    "url": baseUrl,
+    "logo": `${baseUrl}/images/logo.png`,
+    "sameAs": [
+      "https://twitter.com/penifydev",
+      "https://github.com/penifydev",
+      "https://linkedin.com/company/penifydev"
+    ],
+    "description": "Automate human-like docstring/documentation for Python, Java, TypeScript, JavaScript, Kotlin in GitHub, GitLab, Bitbucket."
+  };
+
+  const websiteSchema: WithContext<WebSite> = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Penify.dev",
+    "url": baseUrl,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${baseUrl}/search?q={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  };
+
+  const softwareAppSchema: WithContext<Graph> = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Penify.dev",
+    "description": "Automate human-like docstring/documentation for Python, Java, TypeScript, JavaScript, Kotlin in GitHub, GitLab, Bitbucket.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Penify.dev",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${baseUrl}/images/logo.png`
+      }
+    }
+  };
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 640);
@@ -308,6 +359,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Fragment>
+      <DefaultSeo {...seoConfig} 
+        canonical={currentUrl}
+        openGraph={{
+          ...seoConfig.openGraph,
+          url: currentUrl,
+        }}
+      />
       <Head>
         <title>Penify.dev | Automated Documentation Generation</title>
         <meta
@@ -377,30 +435,24 @@ export default function App({ Component, pageProps }: AppProps) {
 
       {/* JSON-LD Structured Data */}
       <Script
-        id="json-ld"
+        id="organization-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            "name": "Penify.dev",
-            "description": "Automate human-like docstring/documentation for Python, Java, TypeScript, JavaScript, Kotlin in GitHub, GitLab, Bitbucket.",
-            "applicationCategory": "DeveloperApplication",
-            "operatingSystem": "Web",
-            "offers": {
-              "@type": "Offer",
-              "price": "0",
-              "priceCurrency": "USD"
-            },
-            "publisher": {
-              "@type": "Organization",
-              "name": "Penify.dev",
-              "logo": {
-                "@type": "ImageObject",
-                "url": `${baseUrl}/images/logo.png`
-              }
-            }
-          })
+          __html: JSON.stringify(organizationSchema)
+        }}
+      />
+      <Script
+        id="website-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteSchema)
+        }}
+      />
+      <Script
+        id="software-app-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(softwareAppSchema)
         }}
       />
 
