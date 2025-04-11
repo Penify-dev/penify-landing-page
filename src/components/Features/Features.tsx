@@ -42,6 +42,13 @@ export default function Features() {
     return matchesSearch && matchesCategory;
   });
 
+  /**
+   * Handles the zoom event for a specific feature.
+   *
+   * This function sets the index of the feature to be zoomed and logs an event using GA (Google Analytics).
+   *
+   * @param {number} index - The index of the feature to zoom into.
+   */
   const handleFeatureZoom = (index: number) => {
     setZoomedFeature(index);
     
