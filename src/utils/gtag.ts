@@ -68,7 +68,7 @@ export function inHouseAnalytics(event: string, eventRef: Dict) {
 }
 
 export const pageView = (url: string) => {
-  inHouseAnalytics("pageView", url);
+  inHouseAnalytics("pageView", {url});
 };
 
 export const getQueryParameter = (name: string) => {
@@ -78,11 +78,11 @@ export const getQueryParameter = (name: string) => {
 };
 
 export const trackLinkClick = (url: string, email: string, cId: string) => {
-  inHouseAnalytics("linkClick", url);
+  inHouseAnalytics("linkClick",{ url});
 };
 
 export const trackScroll = (value: number) => {
-  inHouseAnalytics("scroll", "scrolled 50% on homepage");
+  inHouseAnalytics("scroll", {event:"scrolled 50% on homepage"});
 };
 
 /**
@@ -96,7 +96,7 @@ export const trackScroll = (value: number) => {
  * trackFormSubmission(['user input 1', 'user input 2']);
  */
 export const trackFormSubmission = (value: [string]) => {
-  inHouseAnalytics("formSubmission", "contact us form submission");
+  inHouseAnalytics("formSubmission", {event:"contact us form submission"});
 };
 
 /**
@@ -107,5 +107,5 @@ export const trackFormSubmission = (value: [string]) => {
  * trackVideoStart(true);
  */
 export const trackVideoStart = (value: boolean) => {
-  inHouseAnalytics("videoView", "Penify.dev video tuts");
+  inHouseAnalytics("videoView", {event:"Penify.dev video tuts"});
 };
