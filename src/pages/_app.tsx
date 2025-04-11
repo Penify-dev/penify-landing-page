@@ -333,13 +333,11 @@ export default function App({ Component, pageProps }: AppProps) {
     return null;
   }
   
-  function throttle(func: Function, limit: number) {
-    let inThrottle: boolean;
-    return function() {
-      const args = arguments;
-      const context = this;
+  function throttle<T extends (...args: any[]) => void>(func: T, limit: number): (...args: Parameters<T>) => void {
+    let inThrottle = false;
+    return (...args: Parameters<T>): void => {
       if (!inThrottle) {
-        func.apply(context, args);
+        func(...args);
         inThrottle = true;
         setTimeout(() => inThrottle = false, limit);
       }
