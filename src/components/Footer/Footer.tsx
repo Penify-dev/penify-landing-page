@@ -6,6 +6,15 @@ import { Fragment } from "react";
 import patternLeft from "public/images/footer/pattern_left_bg.png";
 import patternRight from "public/images/footer/pattern_right_bg.png";
 
+/**
+ * A React functional component representing the website footer.
+ *
+ * This component renders the footer with logo, menu items, social icons,
+ * and copyright information. It includes dynamic content based on `footerItems`
+ * and `socialIcons` props.
+ *
+ * @returns {JSX.Element} - The rendered footer element.
+ */
 export default function Footer() {
   return (
     <footer className="w-full overflow-hidden bg-transparent py-8 md:py-16 xl:py-24 relative">
