@@ -10,6 +10,11 @@ interface FormData {
   message: string;
 }
 
+/**
+ * A React component that renders a contact form for users to submit messages.
+ *
+ * @returns {JSX.Element} The rendered ContactForm component.
+ */
 export function ContactForm() {
   const {
     register,
@@ -18,6 +23,17 @@ export function ContactForm() {
     reset,
   } = useForm<FormData>();
 
+  /**
+   * Handles form submission by making an API call to send the message.
+   *
+   * @async
+   * @param {FormData} data - The form data to be submitted.
+   * @returns {Promise<void>} - A promise that resolves when the submission is complete or rejects on error.
+   * @throws {Error} - If the API request fails, an error is thrown with a message indicating the failure.
+   *
+   * @example
+   * onSubmit({ email: 'user@example.com', message: 'Hello' });
+   */
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     // make api call
     try {
