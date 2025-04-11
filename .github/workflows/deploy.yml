@@ -27,7 +27,7 @@ jobs:
         run: yarn install
 
       - name: Build project
-        run: yarn build
+        run: yarn build && yarn postbuild
         env:
           IS_STATIC_EXPORT: true
 
