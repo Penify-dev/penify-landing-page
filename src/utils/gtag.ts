@@ -67,6 +67,11 @@ export function inHouseAnalytics(event: string, eventRef: Dict) {
   }
 }
 
+/**
+ * Tracks a page view event using in-house analytics.
+ *
+ * @param {string} url - The URL of the page being viewed.
+ */
 export const pageView = (url: string) => {
   inHouseAnalytics("pageView", {url});
 };
@@ -77,10 +82,27 @@ export const getQueryParameter = (name: string) => {
   return urlParams.get(name);
 };
 
+/**
+ * Tracks a link click event using internal analytics.
+ *
+ * @param {string} url - The URL that was clicked.
+ * @param {string} email - The user's email address (if available).
+ * @param {string} cId - A unique identifier for the click event.
+ * @returns {void}
+ *
+ * Example:
+ * trackLinkClick('https://example.com', 'user@example.com', '12345');
+ */
 export const trackLinkClick = (url: string, email: string, cId: string) => {
   inHouseAnalytics("linkClick",{ url});
 };
 
+/**
+ * Triggers an analytics event when the user scrolls by a certain percentage on the homepage.
+ *
+ * @param {number} value - The scroll value indicating the percentage scrolled.
+ * @returns {void}
+ */
 export const trackScroll = (value: number) => {
   inHouseAnalytics("scroll", {event:"scrolled 50% on homepage"});
 };
@@ -88,12 +110,8 @@ export const trackScroll = (value: number) => {
 /**
  * Tracks form submission using Google Analytics.
  *
- * @param value - An array of strings representing the user input.
- * @throws Will throw an error if the 'window' object is not available or if 'window.gtag' is not defined.
- * @example
- *
- * // Example usage:
- * trackFormSubmission(['user input 1', 'user input 2']);
+ * @param {Array<string>} value - An array of strings representing the user input.
+ * @throws {Error} Will throw an error if the 'window' object is not available or if 'window.gtag' is not defined.
  */
 export const trackFormSubmission = (value: [string]) => {
   inHouseAnalytics("formSubmission", {event:"contact us form submission"});
@@ -101,10 +119,9 @@ export const trackFormSubmission = (value: [string]) => {
 
 /**
  * Tracks the start of a video.
- * @param value - A boolean value indicating whether to track the video start.
- * @throws Will throw an error if the 'window' object is not available or if the 'gtag' function is not defined on the 'window' object.
- * @example
- * trackVideoStart(true);
+ *
+ * @param {boolean} value - A boolean value indicating whether to track the video start.
+ * @throws {Error} - Will throw an error if the 'window' object is not available or if the 'gtag' function is not defined on the 'window' object.
  */
 export const trackVideoStart = (value: boolean) => {
   inHouseAnalytics("videoView", {event:"Penify.dev video tuts"});
