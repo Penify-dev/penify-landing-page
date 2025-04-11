@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Flow from "../Flow/Flow";
 import { Dropwdown } from "../Dropdown/Dropdown";
 import { vendors } from "@/utils/teamItems";
@@ -53,10 +54,17 @@ export default function Hero() {
 
               <Link
                 href="https://calendly.com/sumansaurabh-snorkell/intro-snorkell-i"
-                className="rounded-lg bg-slate-700 px-5 py-3 text-center text-xs md:text-sm xl:text-base font-medium text-white transition-all duration-200 ease-in hover:bg-slate-800 focus:outline-none focus:ring-slate-300 self-start w-full sm:w-fit"
+                className="rounded-lg bg-slate-700 px-5 py-3 text-center text-xs md:text-sm xl:text-base font-medium text-white transition-all duration-200 ease-in hover:bg-slate-800 focus:outline-none focus:ring-slate-300 self-start w-full sm:w-fit flex items-center justify-center gap-2"
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <Image 
+                  src="/icons/calender-icon.svg" 
+                  alt="Calendar" 
+                  width={16} 
+                  height={16} 
+                  className="text-white" 
+                />
                 Request a Demo
               </Link>
             </div>

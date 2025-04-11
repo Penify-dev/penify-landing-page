@@ -5295,6 +5295,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-seo@npm:^6.5.0":
+  version: 6.6.0
+  resolution: "next-seo@npm:6.6.0"
+  peerDependencies:
+    next: ^8.1.1-canary.54 || >=9.0.0
+    react: ">=16.0.0"
+    react-dom: ">=16.0.0"
+  checksum: 10c0/60eff5b6fdd83306d26968dfc23b5df502bf014b771b0910bf6cfec944de6f262d7d872ae3155717a31a1dd51ae48db007ce4c0f78f8b435deff37bdc63beb76
+  languageName: node
+  linkType: hard
+
 "next-sitemap@npm:^4.2.3":
   version: 4.2.3
   resolution: "next-sitemap@npm:4.2.3"
@@ -6203,6 +6214,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"schema-dts@npm:^1.1.5":
+  version: 1.1.5
+  resolution: "schema-dts@npm:1.1.5"
+  checksum: 10c0/babe23a1577c75c5df79d73acf34af3399e60928eab46f2236a0c4212061f5778d613a31c9e9ec86a2807d20b1ea460673d72d3fe1f64fb7543867460e607f76
+  languageName: node
+  linkType: hard
+
 "semver@npm:^6.3.1":
   version: 6.3.1
   resolution: "semver@npm:6.3.1"
@@ -6328,6 +6346,7 @@ __metadata:
     eslint-config-next: "npm:^14.2.5"
     mixpanel-browser: "npm:^2.60.0"
     next: "npm:^14.2.21"
+    next-seo: "npm:^6.5.0"
     next-sitemap: "npm:^4.2.3"
     postcss: "npm:^8.4.41"
     react: "npm:^18.3.1"
@@ -6337,8 +6356,10 @@ __metadata:
     react-scroll: "npm:^1.9.0"
     react-tiny-popover: "npm:^8.0.4"
     react-toastify: "npm:^10.0.5"
+    schema-dts: "npm:^1.1.5"
     tailwindcss: "npm:^3.4.10"
     typescript: "npm:5.4.5"
+    web-vitals: "npm:^4.2.4"
   languageName: unknown
   linkType: soft
 
@@ -6942,6 +6963,13 @@ __metadata:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 10c0/41a5bdd214df2f6c3ecf8622745e4a366c4adced864bc3c833739791aeeeb1838119af7daed4ba36428114b5c67dcda034a79c882e97e43c03e66a4dd7389942
+  languageName: node
+  linkType: hard
+
+"web-vitals@npm:^4.2.4":
+  version: 4.2.4
+  resolution: "web-vitals@npm:4.2.4"
+  checksum: 10c0/383c9281d5b556bcd190fde3c823aeb005bb8cf82e62c75b47beb411014a4ed13fa5c5e0489ed0f1b8d501cd66b0bebcb8624c1a75750bd5df13e2a3b1b2d194
   languageName: node
   linkType: hard
 
