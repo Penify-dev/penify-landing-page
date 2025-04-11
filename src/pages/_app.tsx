@@ -153,6 +153,11 @@ export default function App({ Component, pageProps }: AppProps) {
         
         // Reset timer for new page
         setSessionStartTime(new Date());
+      /**
+       * Handles changes in route by tracking page views and time spent on previous pages using various analytics tools.
+       *
+       * @param {string} url - The URL of the new route.
+       */
       }
     };
 
@@ -191,6 +196,17 @@ export default function App({ Component, pageProps }: AppProps) {
           ...linkData
         });
         mp_track_links(target_anchor.href, target_anchor.textContent, linkData);
+        /**
+         * Handles click events on links and buttons within the application.
+         *
+         * This function captures click context for both anchor elements (`<a>`) and button elements,
+         * including the element text, ID, classes, page section, and path. Depending on whether
+         * the clicked element is a link or a button, it logs analytics using Google Analytics,
+         * MarketMuse tracking, and in-house analytics.
+         *
+         * @param {MouseEvent} event - The click event object.
+         * @returns {void}
+         */
         inHouseAnalytics(ANALYTICS_EVENTS.CLICK, linkData);
       }
 
@@ -257,6 +273,12 @@ export default function App({ Component, pageProps }: AppProps) {
     };
 
     // Run once on page load and after route changes
+    /**
+     * Tracks interactions with form elements on a web page by adding event listeners to all forms.
+     *
+     * @function trackFormInteractions
+     * @returns {void}
+     */
     trackFormInteractions();
     router.events.on('routeChangeComplete', trackFormInteractions);
 
@@ -304,6 +326,12 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router]);
 
   // Helper functions for analytics
+  /**
+   * Finds the nearest section or container element for a given HTMLElement.
+   *
+   * @param {HTMLElement} element - The element to find the container for.
+   * @returns {string} - The ID of the section, data-section attribute, or tag name of the container element. Returns 'unknown' if no valid container is found.
+   */
   function findPageSection(element: HTMLElement): string {
     // Find nearest section, article, div with id or other container
     const sectionElement = element.closest('section, article, [id], [data-section]');
@@ -315,6 +343,13 @@ export default function App({ Component, pageProps }: AppProps) {
     return 'unknown';
   }
 
+  /**
+   * Calculates the current scroll depth as a percentage of the total scrollable area.
+   *
+   * @returns {number | null} - The scroll depth as 25, 50, 75, or 100 if scrolled to those points;
+   *                              returns `null` if the page is not scrollable (i.e., the document height
+   *                              is less than or equal to the window height).
+   */
   function calculateScrollDepth(): number | null {
     const scrollTop = window.pageYOffset;
     const winHeight = window.innerHeight;
@@ -333,6 +368,21 @@ export default function App({ Component, pageProps }: AppProps) {
     return null;
   }
   
+  /**
+   * Throttles the execution of a function so that it is called at most once per specified time limit.
+   *
+   * @function
+   * @param {Function} func - The function to be throttled.
+   * @param {number} limit - The time limit in milliseconds within which the function can be executed only once.
+   * @returns {Function} A throttled version of the input function.
+   *
+   * @example
+   * const handleClick = throttle(() => {
+   *   console.log('Button clicked');
+   * }, 200);
+   *
+   * document.getElementById('myButton').addEventListener('click', handleClick);
+   */
   function throttle(func: Function, limit: number) {
     let inThrottle: boolean;
     return function() {

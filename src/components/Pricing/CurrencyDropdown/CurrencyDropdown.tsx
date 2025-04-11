@@ -28,6 +28,13 @@ const currencies: CurrencyTypes[] = [
   },
 ];
 
+/**
+ * Renders a dropdown component for selecting a currency.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.currency - The currently selected currency code.
+ * @param {Function} props.handleCurrencyChange - Callback function to handle currency change.
+ */
 export function CurrencyDropdown({
   currency,
   handleCurrencyChange,

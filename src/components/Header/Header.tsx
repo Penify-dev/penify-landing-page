@@ -6,6 +6,11 @@ import { useEffect, useState } from "react";
 import { Scroller as ScrollerLink } from "../Scroller/Scroller";
 import { Dropwdown } from "../Dropdown/Dropdown";
 
+/**
+ * A functional component that renders a navigation header for a web application.
+ *
+ * @returns {React.ReactNode} - The rendered navigation header.
+ */
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [shouldMenuRender, setShouldMenuRender] = useState<boolean>(false);
