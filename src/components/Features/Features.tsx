@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Element } from "react-scroll";
 import { useState } from "react";
 import { sendGAEvent } from "@next/third-parties/google";
-import { mp_track_feature_zoom } from "@/lib/mixpanel";
+// import { mp_track_feature_zoom } from "@/lib/mixpanel";
 
 export default function Features() {
   const [activeTab, setActiveTab] = useState<string>("all");
@@ -52,7 +52,7 @@ export default function Features() {
     });
     
     // Track the zoom event in Mixpanel
-    mp_track_feature_zoom(filteredFeatures[index].title);
+    // mp_track_feature_zoom(filteredFeatures[index].title);
   };
 
   const closeZoom = () => {
