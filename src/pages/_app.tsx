@@ -20,7 +20,7 @@ import {
 } from "@/lib/mixpanel";
 import { DefaultSeo } from 'next-seo';
 import seoConfig from '@/lib/seo.config';
-import { Graph, Organization, WebSite, WithContext } from 'schema-dts';
+import { Graph, Organization, SoftwareApplication, WebSite, WithContext } from 'schema-dts';
 import { getQueryParameter, inHouseAnalytics } from "@/utils/gtag";
 
 // Initialize analytics
@@ -83,11 +83,11 @@ export default function App({ Component, pageProps }: AppProps) {
     "potentialAction": {
       "@type": "SearchAction",
       "target": `${baseUrl}/search?q={search_term_string}`,
-      "query-input": "required name=search_term_string"
+      "query": "required name=search_term_string"
     }
   };
 
-  const softwareAppSchema: WithContext<Graph> = {
+  const softwareAppSchema: WithContext<SoftwareApplication> = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Penify.dev",
@@ -262,8 +262,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
     // Track web vitals
     if ('web-vitals' in window) {
-      import('web-vitals').then(({ getCLS, getFID, getLCP }) => {
-        getCLS(metric => {
+      import('web-vitals').then((webVitals) => {
+        webVitals.onCLS(metric => {
           const clsContext = {
             metric_name: 'CLS',
             value: metric.value,
@@ -273,9 +273,9 @@ export default function App({ Component, pageProps }: AppProps) {
           mp_track_custom_event('web-vitals', clsContext);
           inHouseAnalytics('web-vitals', clsContext);
         });
-        getFID(metric => {
+        webVitals.onINP(metric => {
           const fidContext = {
-            metric_name: 'FID',
+            metric_name: 'INP',
             value: metric.value,
             page_path: router.asPath,
           };
@@ -283,7 +283,8 @@ export default function App({ Component, pageProps }: AppProps) {
           mp_track_custom_event('web-vitals', fidContext);
           inHouseAnalytics('web-vitals', fidContext);
         });
-        getLCP(metric => {
+        
+        webVitals.onLCP(metric => {
           const lcpContext = {
             metric_name: 'LCP',
             value: metric.value,
