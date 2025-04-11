@@ -8,6 +8,11 @@ import { Dropwdown } from "../Dropdown/Dropdown";
 import { CurrencyDropdown } from "../Pricing/CurrencyDropdown/CurrencyDropdown";
 import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
 
+/**
+ * Represents the header component of an application.
+ *
+ * @returns {JSX.Element} - The rendered JSX element for the header.
+ */
 export default function Header() {
   const { currency, handleCurrencyChange, getCurrency } =
     useCurrencyConversion();
