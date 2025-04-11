@@ -2,12 +2,16 @@ import { menus } from "@/utils/menuItems";
 import { IconMenu2 } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "public/penify-logo.svg?url";
 import { useEffect, useState } from "react";
 import { Scroller as ScrollerLink } from "../Scroller/Scroller";
 import { Dropwdown } from "../Dropdown/Dropdown";
+import { CurrencyDropdown } from "../Pricing/CurrencyDropdown/CurrencyDropdown";
+import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
 
 export default function Header() {
+  const { currency, handleCurrencyChange, getCurrency } =
+    useCurrencyConversion();
+
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [shouldMenuRender, setShouldMenuRender] = useState<boolean>(false);
 
@@ -25,7 +29,9 @@ export default function Header() {
       <div className="container mx-auto flex flex-wrap items-center justify-between px-4">
         <Link href="/" className="inline-block">
           <Image
-            src={logo}
+            src="/penify-logo.svg"
+            width={140}
+            height={40}
             className="h-10 w-auto md:h-12 xl:h-14"
             alt="Penify Logo"
             priority
@@ -33,6 +39,12 @@ export default function Header() {
         </Link>
 
         <div className="flex space-x-3 lg:order-2 lg:space-x-0">
+          <div className="flex items-center h-10 md:h-auto py-2 px-3">
+            <CurrencyDropdown
+              currency={currency}
+              handleCurrencyChange={handleCurrencyChange}
+            />
+          </div>
           <Link
             href="https://dashboard.penify.dev/"
             className="inline-flex items-center rounded-lg bg-blue-700 px-5 py-2 text-center text-sm font-medium text-white transition-all duration-200 ease-in hover:bg-blue-800 focus:outline-none focus:ring-blue-300 md:text-base"

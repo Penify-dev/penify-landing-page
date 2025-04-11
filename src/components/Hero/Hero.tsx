@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Flow from "../Flow/Flow";
 import { Dropwdown } from "../Dropdown/Dropdown";
 import { vendors } from "@/utils/teamItems";
@@ -32,8 +33,8 @@ export default function Hero() {
               </h3>
             </div>
 
-            <h1 className="mb-4 md:mb-6 font-bold text-2xl md:text-3xl lg:text-4xl text-slate-200">
-              Automated Documentation for Every Step of the SDLC
+            <h1 className="mb-4 md:mb-6 font-bold text-3xl md:text-4xl lg:text-5xl text-slate-200">
+             Docs Pipeline that set devs up for <span className="text-green-400">+ success</span>
             </h1>
 
             <p className="mb-6 md:mb-8 text-sm text-slate-400 md:text-base lg:text-lg">
@@ -53,10 +54,17 @@ export default function Hero() {
 
               <Link
                 href="https://calendly.com/sumansaurabh-snorkell/intro-snorkell-i"
-                className="rounded-lg bg-slate-700 px-5 py-3 text-center text-xs md:text-sm xl:text-base font-medium text-white transition-all duration-200 ease-in hover:bg-slate-800 focus:outline-none focus:ring-slate-300 self-start w-full sm:w-fit"
+                className="rounded-lg bg-slate-700 px-5 py-3 text-center text-xs md:text-sm xl:text-base font-medium text-white transition-all duration-200 ease-in hover:bg-slate-800 focus:outline-none focus:ring-slate-300 self-start w-full sm:w-fit flex items-center justify-center gap-2"
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <Image 
+                  src="/icons/calender-icon.svg" 
+                  alt="Calendar" 
+                  width={16} 
+                  height={16} 
+                  className="text-white" 
+                />
                 Request a Demo
               </Link>
             </div>

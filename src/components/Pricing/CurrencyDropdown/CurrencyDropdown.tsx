@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CurrencyOptions } from "../../../hooks/useCurrencyConversion";
+import US from "public/icons/country/US.svg";
+import IN from "public/icons/country/IN.svg";
 
 interface CurrencyDropdownProps {
   currency: CurrencyOptions;
@@ -15,12 +17,12 @@ interface CurrencyTypes {
 
 const currencies: CurrencyTypes[] = [
   {
-    flag: "https://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg?url",
+    flag: '/icons/country/US.svg',
     code: "USD",
     title: "US",
   },
   {
-    flag: "https://purecatamphetamine.github.io/country-flag-icons/3x2/IN.svg?url",
+    flag: "/icons/country/IN.svg",
     code: "INR",
     title: "India",
   },
@@ -43,6 +45,9 @@ export function CurrencyDropdown({
     }
   }, [isDropdownOpen]);
 
+  // Find the current currency object
+  const currentCurrency = currencies.find((c) => c.code === currency) || currencies[0];
+
   return (
     <div className="w-fit flex flex-col items-center relative">
       <button
@@ -51,7 +56,8 @@ export function CurrencyDropdown({
         onClick={() => setIsDropdownOpen((prev) => !prev)}
         aria-expanded={isDropdownOpen}
       >
-        Selected Currency: <span className="font-semibold ms-1">{currency}</span>
+        Currency:{" "}
+        <span className="font-semibold ms-1"><Image src={currentCurrency.flag} alt={currentCurrency.title} width={18} height={12} /></span>
       </button>
 
       <div

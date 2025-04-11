@@ -11,10 +11,16 @@ export default function Footer() {
     <footer className="w-full overflow-hidden bg-transparent py-8 md:py-16 xl:py-24 relative">
       <div className="container mx-auto px-4">
         <div className="md:flex md:justify-between">
-          <div className="mb-6 md:mb-0" data-aos="fade-up" data-aos-duration="800">
+          <div
+            className="mb-6 md:mb-0"
+            data-aos="fade-up"
+            data-aos-duration="800"
+          >
             <Link href="/" className="inline-block">
               <Image
-                src={logo}
+                src="/penify-logo.svg"
+                width={140}
+                height={40}
                 className="xl:h-13 h-9 w-auto md:h-11"
                 alt="Penify Logo"
               />
@@ -23,7 +29,12 @@ export default function Footer() {
 
           <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-6 md:w-4/5 md:grid-cols-3">
             {footerItems.map(({ title, children }, footerIndex) => (
-              <div key={`footer-menu-${footerIndex}`} data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+              <div
+                key={`footer-menu-${footerIndex}`}
+                data-aos="fade-up"
+                data-aos-duration="800"
+                data-aos-delay="200"
+              >
                 <h2 className="mb-6 text-sm font-semibold uppercase text-slate-200 md:text-base xl:text-lg">
                   {title}
                 </h2>
@@ -61,7 +72,11 @@ export default function Footer() {
 
         <hr className="my-6 border-slate-600 sm:mx-auto lg:my-8" />
 
-        <div className="sm:flex sm:flex-wrap sm:items-center sm:justify-center md:justify-between" data-aos="fade-up" data-aos-duration="400">
+        <div
+          className="sm:flex sm:flex-wrap sm:items-center sm:justify-center md:justify-between"
+          data-aos="fade-up"
+          data-aos-duration="400"
+        >
           <p className="text-sm text-slate-400 sm:text-center md:text-base xl:text-lg">
             © 2023 Snorkell Associates and Co. All Rights Reserved.
           </p>
