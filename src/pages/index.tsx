@@ -13,6 +13,11 @@ import { inHouseAnalytics } from "@/utils/gtag";
 
 const inter = Inter({ subsets: ["latin"] });
 
+/**
+ * The main component of the application's home page.
+ *
+ * @returns {JSX.Element} - The JSX element representing the home page.
+ */
 export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -29,6 +34,15 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    /**
+     * Handles scroll events to track user engagement with the page.
+     * This function calculates the current scroll depth as a percentage of the total document height.
+     * If the scroll depth falls within a specific range (70% to 72%), it sends analytics events
+     * for both Google Analytics and an in-house analytics system.
+     *
+     * @function handleScroll
+     * @returns {void}
+     */
     const handleScroll = () => {
       const scrollDepth = window.scrollY / document.body.offsetHeight;
 

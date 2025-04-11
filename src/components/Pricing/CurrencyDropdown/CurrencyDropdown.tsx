@@ -28,6 +28,12 @@ const currencies: CurrencyTypes[] = [
   },
 ];
 
+/**
+ * A dropdown component for selecting currencies.
+ *
+ * @param {Object} currency - The current currency code.
+ * @param {function} handleCurrencyChange - Callback function to handle currency change.
+ */
 export function CurrencyDropdown({
   currency,
   handleCurrencyChange,

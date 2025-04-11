@@ -146,6 +146,12 @@ export default function App({ Component, pageProps }: AppProps) {
         const timeOnPageContext = {
           seconds: timeSpentSeconds,
           previous_page: document.referrer || 'direct',
+        /**
+         * Handles route changes by tracking page views with additional context.
+         * Tracks page views in Google Analytics (GA), Mixpanel, and internal analytics systems.
+         *
+         * @param {string} url - The URL of the new page being navigated to.
+         */
         };
         sendGAEvent("event", ANALYTICS_EVENTS.TIME_ON_PAGE, timeOnPageContext);
         mp_track_custom_event(ANALYTICS_EVENTS.TIME_ON_PAGE, timeOnPageContext);
@@ -184,6 +190,11 @@ export default function App({ Component, pageProps }: AppProps) {
           href: target_anchor.href,
           link_text: target_anchor.textContent?.trim() || '',
           is_external: isExternal,
+        /**
+         * Handles click events on links and buttons, captures click context, and sends analytics data.
+         *
+         * @param {MouseEvent} event - The mouse event object.
+         */
         };
         
         sendGAEvent("event", ANALYTICS_EVENTS.CLICK, {
@@ -250,6 +261,16 @@ export default function App({ Component, pageProps }: AppProps) {
             form_name: form.name || 'unknown',
             page_path: router.asPath,
           };
+          /**
+           * Tracks form interactions across the application by adding event listeners to all forms on the page.
+           *
+           * This function listens for two types of events:
+           * 1. "focusin" - Triggered when any input element inside a form gains focus, indicating the start of form interaction.
+           * 2. "submit" - Triggered when a form is submitted, indicating the completion of form interaction.
+           *
+           * For each event type, it constructs a context object containing details about the form and the current page path,
+           * then sends this information to various analytics services for tracking.
+           */
           sendGAEvent("event", ANALYTICS_EVENTS.FORM_COMPLETION, formContext);
           mp_track_custom_event(ANALYTICS_EVENTS.FORM_COMPLETION, formContext);
         });
@@ -305,6 +326,12 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router]);
 
   // Helper functions for analytics
+  /**
+   * Finds the nearest section or container element to a given HTMLElement and returns its identifier or type.
+   *
+   * @param {HTMLElement} element - The HTMLElement for which to find the nearest section or container.
+   * @returns {string} - The ID of the section, data-section attribute if available, or tag name in lowercase. If no such element is found, returns 'unknown'.
+   */
   function findPageSection(element: HTMLElement): string {
     // Find nearest section, article, div with id or other container
     const sectionElement = element.closest('section, article, [id], [data-section]');
@@ -334,6 +361,21 @@ export default function App({ Component, pageProps }: AppProps) {
     return null;
   }
   
+  /**
+   * Throttles the execution of a function so that it is only called once per a specified time limit.
+   *
+   * @template T - The type of the function to be throttled.
+   * @param {T} func - The function to be throttled.
+   * @param {number} limit - The time limit in milliseconds during which the function can be called only once.
+   * @returns {(...args: Parameters<T>) => void} - A new function that, when invoked, will throttle the execution of `func`.
+   *
+   * @example
+   * const throttledScrollHandler = throttle(() => {
+   *   console.log('Scroll event throttled');
+   * }, 250);
+   *
+   * window.addEventListener('scroll', throttledScrollHandler);
+   */
   function throttle<T extends (...args: any[]) => void>(func: T, limit: number): (...args: Parameters<T>) => void {
     let inThrottle = false;
     return (...args: Parameters<T>): void => {

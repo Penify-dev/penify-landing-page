@@ -43,6 +43,14 @@ export default function Features() {
     return matchesSearch && matchesCategory;
   });
 
+  /**
+   * Handles zooming into a specific feature by setting it as the zoomed feature
+   * and tracking the event in Google Analytics (GA) and Mixpanel.
+   *
+   * @param {number} index - The index of the feature to be zoomed into.
+   *
+   * @throws {Error} If the provided index is out of bounds for filteredFeatures array.
+   */
   const handleFeatureZoom = (index: number) => {
     setZoomedFeature(index);
     
