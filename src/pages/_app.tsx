@@ -21,6 +21,7 @@ import {
 import { DefaultSeo } from 'next-seo';
 import seoConfig from '@/lib/seo.config';
 import { Graph, Organization, WebSite, WithContext } from 'schema-dts';
+import { getQueryParameter, inHouseAnalytics } from "@/utils/gtag";
 
 // Initialize analytics
 mp_init();
@@ -46,6 +47,19 @@ export default function App({ Component, pageProps }: AppProps) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://penify.dev";
   const currentUrl = `${baseUrl}${router.asPath}`;
 
+  const email = getQueryParameter("e");
+  if (email) {
+    localStorage.setItem("email", email);
+    window.gtag('set', 'user_properties', { email_id: email });
+  }
+
+  const cId = getQueryParameter('cid');
+  if (cId) {
+    localStorage.setItem('cId', cId);
+    window.gtag('set', 'user_properties', { c_id: cId });
+  }
+      
+  
   // Schema.org structured data
   const organizationSchema: WithContext<Organization> = {
     "@context": "https://schema.org",
@@ -124,18 +138,18 @@ export default function App({ Component, pageProps }: AppProps) {
       // Track in both GA and Mixpanel with consistent data
       sendGAEvent("event", ANALYTICS_EVENTS.PAGE_VIEW, routeContext);
       mp_track_page(url, routeContext);
+      inHouseAnalytics(ANALYTICS_EVENTS.PAGE_VIEW, routeContext);
       
       // Track time spent on previous page when navigating
       if (sessionStartTime) {
         const timeSpentSeconds = (new Date().getTime() - sessionStartTime.getTime()) / 1000;
-        sendGAEvent("event", ANALYTICS_EVENTS.TIME_ON_PAGE, { 
+        const timeOnPageContext = {
           seconds: timeSpentSeconds,
           previous_page: document.referrer || 'direct',
-        });
-        mp_track_custom_event(ANALYTICS_EVENTS.TIME_ON_PAGE, { 
-          seconds: timeSpentSeconds,
-          previous_page: document.referrer || 'direct',
-        });
+        };
+        sendGAEvent("event", ANALYTICS_EVENTS.TIME_ON_PAGE, timeOnPageContext);
+        mp_track_custom_event(ANALYTICS_EVENTS.TIME_ON_PAGE, timeOnPageContext);
+        inHouseAnalytics(ANALYTICS_EVENTS.TIME_ON_PAGE, timeOnPageContext);
         
         // Reset timer for new page
         setSessionStartTime(new Date());
@@ -177,6 +191,7 @@ export default function App({ Component, pageProps }: AppProps) {
           ...linkData
         });
         mp_track_links(target_anchor.href, target_anchor.textContent, linkData);
+        inHouseAnalytics(ANALYTICS_EVENTS.CLICK, linkData);
       }
 
       if (target_button) {
@@ -191,6 +206,7 @@ export default function App({ Component, pageProps }: AppProps) {
           ...buttonData,
         });
         mp_track_btns(target_button.textContent, buttonData);
+        inHouseAnalytics(ANALYTICS_EVENTS.CLICK, buttonData);
       }
     };
 
@@ -200,14 +216,13 @@ export default function App({ Component, pageProps }: AppProps) {
     const handleScroll = throttle(() => {
       const scrollDepth = calculateScrollDepth();
       if (scrollDepth && scrollDepth % 25 === 0) { // Track at 25%, 50%, 75%, 100%
-        sendGAEvent("event", ANALYTICS_EVENTS.SCROLL_DEPTH, { 
+        const scrollContext = {
           depth_percentage: scrollDepth,
           page_path: router.asPath,
-        });
-        mp_track_custom_event(ANALYTICS_EVENTS.SCROLL_DEPTH, { 
-          depth_percentage: scrollDepth,
-          page_path: router.asPath,
-        });
+        }
+        sendGAEvent("event", ANALYTICS_EVENTS.SCROLL_DEPTH, scrollContext);
+        mp_track_custom_event(ANALYTICS_EVENTS.SCROLL_DEPTH, scrollContext);
+        inHouseAnalytics(ANALYTICS_EVENTS.SCROLL_DEPTH, scrollContext);
       }
     }, 500);
 
@@ -218,26 +233,25 @@ export default function App({ Component, pageProps }: AppProps) {
       document.querySelectorAll("form").forEach(form => {
         // Track form start
         form.addEventListener("focusin", () => {
-          sendGAEvent("event", ANALYTICS_EVENTS.FORM_START, { 
+          const formContext = {
             form_id: form.id || 'unknown',
+            form_name: form.name || 'unknown',
             page_path: router.asPath,
-          });
-          mp_track_custom_event(ANALYTICS_EVENTS.FORM_START, { 
-            form_id: form.id || 'unknown',
-            page_path: router.asPath,
-          });
+          };
+          sendGAEvent("event", ANALYTICS_EVENTS.FORM_START, formContext);
+          mp_track_custom_event(ANALYTICS_EVENTS.FORM_START, formContext);
+          inHouseAnalytics(ANALYTICS_EVENTS.FORM_START, formContext);
         }, { once: true });
         
         // Track form submissions
         form.addEventListener("submit", () => {
-          sendGAEvent("event", ANALYTICS_EVENTS.FORM_COMPLETION, { 
+          const formContext = {
             form_id: form.id || 'unknown',
+            form_name: form.name || 'unknown',
             page_path: router.asPath,
-          });
-          mp_track_custom_event(ANALYTICS_EVENTS.FORM_COMPLETION, { 
-            form_id: form.id || 'unknown',
-            page_path: router.asPath,
-          });
+          };
+          sendGAEvent("event", ANALYTICS_EVENTS.FORM_COMPLETION, formContext);
+          mp_track_custom_event(ANALYTICS_EVENTS.FORM_COMPLETION, formContext);
         });
       });
     };
@@ -250,34 +264,34 @@ export default function App({ Component, pageProps }: AppProps) {
     if ('web-vitals' in window) {
       import('web-vitals').then(({ getCLS, getFID, getLCP }) => {
         getCLS(metric => {
-          sendGAEvent('event', 'web-vitals', { 
+          const clsContext = {
             metric_name: 'CLS',
             value: metric.value,
-          });
-          mp_track_custom_event('web-vitals', {
-            metric_name: 'CLS',
-            value: metric.value,
-          });
+            page_path: router.asPath,
+          };
+          sendGAEvent('event', 'web-vitals', clsContext);
+          mp_track_custom_event('web-vitals', clsContext);
+          inHouseAnalytics('web-vitals', clsContext);
         });
         getFID(metric => {
-          sendGAEvent('event', 'web-vitals', {
+          const fidContext = {
             metric_name: 'FID',
             value: metric.value,
-          });
-          mp_track_custom_event('web-vitals', {
-            metric_name: 'FID',
-            value: metric.value,
-          });
+            page_path: router.asPath,
+          };
+          sendGAEvent('event', 'web-vitals', fidContext);
+          mp_track_custom_event('web-vitals', fidContext);
+          inHouseAnalytics('web-vitals', fidContext);
         });
         getLCP(metric => {
-          sendGAEvent('event', 'web-vitals', {
+          const lcpContext = {
             metric_name: 'LCP',
             value: metric.value,
-          });
-          mp_track_custom_event('web-vitals', {
-            metric_name: 'LCP',
-            value: metric.value,
-          });
+            page_path: router.asPath,
+          };
+          sendGAEvent('event', 'web-vitals', lcpContext);
+          mp_track_custom_event('web-vitals', lcpContext);
+          inHouseAnalytics('web-vitals', lcpContext);
         });
       });
     }

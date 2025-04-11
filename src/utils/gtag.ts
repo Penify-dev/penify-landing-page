@@ -1,3 +1,4 @@
+import { Dict } from "mixpanel-browser";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
@@ -6,12 +7,28 @@ declare global {
   }
 }
 
-async function inHouseAnalytics(event: string, eventRef: string) {
+// Helper to check if code is running in browser environment
+const isBrowser = (): boolean => {
+  return typeof window !== 'undefined' && window.document !== undefined;
+};
+
+export function inHouseAnalytics(event: string, eventRef: Dict) {
+  if (!isBrowser()) return;
+  
   const cId = localStorage.getItem("cId");
-  const email = localStorage.getItem("email");
-  if (!cId && !email) {
-    return;
+  let email = localStorage.getItem("email");
+  
+  if(!email) {
+    // Generate a unique anonymous ID if email doesn't exist
+    let anonymousId = localStorage.getItem("anonymousId");
+    if (!anonymousId) {
+      // Create unique ID combining timestamp and random string
+      anonymousId = `an_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
+      localStorage.setItem("aId", anonymousId);
+    }
+    email = anonymousId; // Use this as the identifier instead of email
   }
+  
   const campaignId = getQueryParameter("oid") || "-1";
   const campaignType = getQueryParameter("ot") || "-1";
   const cIdInt = parseInt(cId || "-1");
@@ -20,63 +37,51 @@ async function inHouseAnalytics(event: string, eventRef: string) {
     eventType: event,
     cId: cIdInt,
     email,
-    eventRef,
+    eventRef: JSON.stringify(eventRef),
     campaignId,
     campaignType,
     meta: JSON.stringify({
-      url: window.location.href,
-      referrer: document.referrer,
+      url: isBrowser() ? window.location.href : '',
+      referrer: isBrowser() ? document.referrer : '',
       eId: eId,
     }),
   };
 
   try {
     // axiosInstance.post("v1/analytics/track", data);
-    await fetch("https://production-gateway.snorkell.ai/api/v1/analytics/track", {
+    fetch("https://production-gateway.snorkell.ai/api/v1/analytics/track", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+    })
+    .then(response => {
+      // Handle response if needed
+    })
+    .catch(error => {
+      console.log(error);
     });
-    
   } catch (error) {
     console.log(error);
   }
 }
 
 export const pageView = (url: string) => {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("config", process.env.GA_MEASUREMENT_ID, {
-      page_path: url,
-    });
-  }
   inHouseAnalytics("pageView", url);
 };
 
 export const getQueryParameter = (name: string) => {
+  if (!isBrowser()){console.log("server side rendering"); return null};
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(name);
 };
 
 export const trackLinkClick = (url: string, email: string, cId: string) => {
-  window.gtag("event", "click", {
-    event_category: "link",
-    event_label: url,
-    email_id: email, // Make sure to replace 'dimension1' with the actual index of your custom dimension
-    c_id: cId, // Make sure to replace 'dimension2' with the actual index of your custom dimension
-  });
   inHouseAnalytics("linkClick", url);
 };
 
 export const trackScroll = (value: number) => {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", "scroll", {
-      event_category: "scroll depth",
-      event_label: "scrolled 50% on homepage",
-      value: value,
-    });
-  }
   inHouseAnalytics("scroll", "scrolled 50% on homepage");
 };
 
@@ -91,13 +96,6 @@ export const trackScroll = (value: number) => {
  * trackFormSubmission(['user input 1', 'user input 2']);
  */
 export const trackFormSubmission = (value: [string]) => {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", "submit", {
-      event_category: "Contact Form",
-      event_label: "contact us form submission",
-      user: value,
-    });
-  }
   inHouseAnalytics("formSubmission", "contact us form submission");
 };
 
@@ -109,11 +107,5 @@ export const trackFormSubmission = (value: [string]) => {
  * trackVideoStart(true);
  */
 export const trackVideoStart = (value: boolean) => {
-  if (typeof window !== "undefined" && window.gtag && value) {
-    window.gtag("event", "video-view", {
-      event_category: "Video",
-      event_label: "Penify.dev video tuts",
-    });
-  }
   inHouseAnalytics("videoView", "Penify.dev video tuts");
 };
