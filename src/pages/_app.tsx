@@ -50,13 +50,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const email = getQueryParameter("e");
   if (email) {
     localStorage.setItem("email", email);
-    window.gtag('set', 'user_properties', { email_id: email });
+    // window.gtag('set', 'user_properties', { email_id: email });
   }
 
   const cId = getQueryParameter('cid');
   if (cId) {
     localStorage.setItem('cId', cId);
-    window.gtag('set', 'user_properties', { c_id: cId });
+    // window.gtag('set', 'user_properties', { c_id: cId });
   }
       
   
