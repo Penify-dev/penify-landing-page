@@ -22,7 +22,7 @@ const currencies: CurrencyTypes[] = [
     title: "US",
   },
   {
-    flag: "public/icons/country/IN.svg",
+    flag: "/icons/country/IN.svg",
     code: "INR",
     title: "India",
   },
@@ -45,6 +45,9 @@ export function CurrencyDropdown({
     }
   }, [isDropdownOpen]);
 
+  // Find the current currency object
+  const currentCurrency = currencies.find((c) => c.code === currency) || currencies[0];
+
   return (
     <div className="w-fit flex flex-col items-center relative">
       <button
@@ -53,8 +56,8 @@ export function CurrencyDropdown({
         onClick={() => setIsDropdownOpen((prev) => !prev)}
         aria-expanded={isDropdownOpen}
       >
-        Selected Currency:{" "}
-        <span className="font-semibold ms-1">{currency}</span>
+        Currency:{" "}
+        <span className="font-semibold ms-1"><Image src={currentCurrency.flag} alt={currentCurrency.title} width={18} height={12} /></span>
       </button>
 
       <div

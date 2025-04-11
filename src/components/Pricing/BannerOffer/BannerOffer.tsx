@@ -16,11 +16,10 @@ export function BannerOffer({ price, currency, getCurrency }: BannerOfferProps) 
       <div className="flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="text-center md:text-left">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-            One-time Payment, Document Full Repo
+            Document Full Repo
           </h2>
           <p className="text-blue-100 text-lg">
-            Get your entire repository documented in minutes, for less than 
-            <span className="font-bold text-white"> {currencySymbol}{displayPrice}</span>
+            Get your entire repository documented in minute
           </p>
         </div>
         
