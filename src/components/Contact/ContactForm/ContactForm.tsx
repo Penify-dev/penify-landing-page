@@ -18,6 +18,15 @@ export function ContactForm() {
     reset,
   } = useForm<FormData>();
 
+  /**
+   * Handles form submission by sending data to an API and handling responses.
+   *
+   * @param {FormData} data - The form data to be submitted.
+   * @returns {Promise<void>} A promise that resolves when the form submission process is complete.
+   *
+   * @example
+   * onSubmit({ name: 'John', email: 'john@example.com', message: 'Hello' });
+   */
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     // make api call
     try {
