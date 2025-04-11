@@ -1,9 +1,12 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /api/*
+Disallow: /admin/*
 
 # Host
-Host: https://www.penify.dev/
+Host: https://penify.dev
 
 # Sitemaps
-Sitemap: https://www.penify.dev/sitemap.xml
+Sitemap: https://penify.dev/sitemap.xml
+Sitemap: https://penify.dev/server-sitemap.xml
