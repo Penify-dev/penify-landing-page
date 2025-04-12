@@ -29,6 +29,18 @@ export function useCurrencyConversion() {
   }, []);
 
   useEffect(() => {
+    const savedCurrency = localStorage.getItem("selected-currency");
+    if (savedCurrency) {
+      try {
+      JSON.parse(savedCurrency) as CurrencyOptions;
+      return;
+      }
+      catch (error) {
+        console.error("Error parsing saved currency:", error);
+      }
+      
+    }
+      
     const fetchLocation = async () => {
       try {
         const response = await fetch(
