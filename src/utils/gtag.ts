@@ -14,6 +14,8 @@ const isBrowser = (): boolean => {
 
 export function inHouseAnalytics(event: string, eventRef: Dict) {
   if (!isBrowser()) return;
+  // if localhost, return
+  if (window.location.hostname === "localhost") return;
   
   const cId = localStorage.getItem("cId");
   let email = localStorage.getItem("email");
