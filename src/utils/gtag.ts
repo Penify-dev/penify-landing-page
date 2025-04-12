@@ -12,6 +12,13 @@ const isBrowser = (): boolean => {
   return typeof window !== 'undefined' && window.document !== undefined;
 };
 
+/**
+ * Tracks an event with analytics data if conditions are met.
+ *
+ * @param {string} event - The type of event to track.
+ * @param {Dict} eventRef - Additional reference data for the event.
+ * @returns {void}
+ */
 export function inHouseAnalytics(event: string, eventRef: Dict) {
   if (!isBrowser()) return;
   // if localhost, return
