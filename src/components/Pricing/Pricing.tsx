@@ -1,5 +1,4 @@
 import { Element } from "react-scroll";
-import { CurrencyDropdown } from "./CurrencyDropdown/CurrencyDropdown";
 import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
 import { use, useEffect, useState } from "react";
 import { getPlanPrice, PlanTypes } from "@/api/pricing";
