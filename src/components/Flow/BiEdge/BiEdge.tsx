@@ -1,6 +1,6 @@
 import React from "react";
 import { IconCaretDownFilled, IconCaretUpFilled } from "@tabler/icons-react";
-import { EdgeLabelRenderer, EdgeProps, getBezierPath } from "@xyflow/react";
+import { BaseEdge, EdgeLabelRenderer, EdgeProps, getBezierPath } from "@xyflow/react";
 
 interface EdgeData {
   label?: string;
@@ -14,70 +14,53 @@ export function BiEdge({
   targetY,
   sourcePosition,
   targetPosition,
+  data,
   style = {},
   markerEnd,
-  data,
-}: EdgeProps & { data?: EdgeData }) {
-  const [edgePath] = getBezierPath({
+  labelStyle,
+}: EdgeProps) {
+  const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
     sourcePosition,
     targetX,
     targetY,
     targetPosition,
+    curvature: 0.4,
   });
-
-  // Calculate the midpoint of the edge
-  const midX = (sourceX + targetX) / 2;
-  const midY = (sourceY + targetY) / 2;
-
-  // Calculate the angle of the edge
-  const angle =
-    (Math.atan2(targetY - sourceY, targetX - sourceX) * 180) / Math.PI;
-
-  // Calculate the length of the edge
-  const length = Math.sqrt(
-    Math.pow(targetX - sourceX, 2) + Math.pow(targetY - sourceY, 2)
-  );
 
   return (
     <>
-      <path
+      <BaseEdge
         id={id}
-        style={style}
-        className="react-flow__edge-path"
-        d={edgePath}
+        path={edgePath}
+        style={{
+          strokeWidth: 2.5,
+          stroke: "#8b5cf6",
+          strokeDasharray: "5,5",
+          ...style,
+        }}
         markerEnd={markerEnd}
+        interactionWidth={20}
       />
-      <EdgeLabelRenderer>
+      
+      {data?.label && (
+        <EdgeLabelRenderer>
           <div
             style={{
-              transform: `translate(-50%, -50%) translate(${midX}px,${midY}px) rotate(${angle}deg)`,
+              position: "absolute",
+              transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
+              fontSize: 12,
+              pointerEvents: "all",
+              ...labelStyle,
             }}
-            className={`nodrag nopan absolute top-0 left-0 w-[${length}px] h-6 flex items-center justify-between`}
+            className="px-3 py-2 max-w-[220px] rounded-lg bg-indigo-500/20 backdrop-blur-md border border-indigo-400/30 shadow-lg text-xs text-indigo-300 font-medium text-center hover:bg-indigo-500/30 transition-colors"
           >
-            <IconCaretUpFilled
-              color="#fff"
-              style={{ transform: `rotate(${angle}deg)` }}
-            />
-            <IconCaretDownFilled
-              color="#fff"
-              style={{ transform: `rotate(${angle}deg)` }}
-            />
+            {data.label}
+            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-indigo-500/20 border border-indigo-400/30 rotate-45"></div>
           </div>
-          {data && data.label && (
-            <div
-              style={{
-                transform: `translate(0, -50%) translate(${midX}px,${midY}px)`,
-              }}
-              className="nodrag nopan absolute top-1 left-8 w-60"
-            >
-              <p className="bg-transparent text-base font-normal text-teal-400">
-                {data.label}
-              </p>
-            </div>
-          )}
-      </EdgeLabelRenderer>
+        </EdgeLabelRenderer>
+      )}
     </>
   );
 }

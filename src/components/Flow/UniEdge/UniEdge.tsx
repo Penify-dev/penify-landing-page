@@ -1,9 +1,4 @@
-import {
-  IconCaretDownFilled,
-  IconCaretRightFilled,
-  IconCaretUpFilled,
-} from "@tabler/icons-react";
-import { EdgeLabelRenderer, EdgeProps, getBezierPath } from "@xyflow/react";
+import { BaseEdge, EdgeLabelRenderer, EdgeProps, getStraightPath } from "@xyflow/react";
 
 interface EdgeData {
   label?: string;
@@ -11,7 +6,6 @@ interface EdgeData {
 }
 
 export function UniEdge({
-  id,
   sourceX,
   sourceY,
   targetX,
@@ -21,8 +15,10 @@ export function UniEdge({
   style = {},
   markerEnd,
   data,
+  id,
+  labelStyle,
 }: EdgeProps & { data?: EdgeData }) {
-  const [edgePath] = getBezierPath({
+  const [edgePath, labelX, labelY] = getStraightPath({
     sourceX,
     sourceY,
     sourcePosition,
@@ -31,62 +27,35 @@ export function UniEdge({
     targetPosition,
   });
 
-  // Calculate a position near the target node
-  const dx = targetX - sourceX;
-  const dy = targetY - sourceY;
-  const distance = Math.sqrt(dx * dx + dy * dy);
-  const iconOffset = 5; // Adjust this value to move the icon closer to or further from the target
-  const iconX = targetX - (dx / distance) * iconOffset;
-  const iconY = targetY - (dy / distance) * iconOffset;
-
   return (
     <>
-      <path
-        id={id}
-        style={style}
-        className="react-flow__edge-path"
-        d={edgePath}
+      <BaseEdge
+        path={edgePath}
         markerEnd={markerEnd}
+        style={{
+          strokeWidth: 2,
+          stroke: "#4ade80",
+          ...style,
+        }}
+        interactionWidth={20}
       />
 
-      <EdgeLabelRenderer>
-        <div
-          style={{
-            position: "absolute",
-            transform: `translate(-50%, -50%) translate(${iconX}px,${iconY}px)`,
-            fontSize: 12,
-          }}
-          className="nodrag nopan relative"
-        >
-          {data?.uniType === "uniEdgeBot" && (
-            <>
-              <IconCaretDownFilled color="#fff" />
-
-              <div className="absolute -top-10 left-7 w-48">
-                <p className="bg-transparent text-base font-normal text-orange-400">
-                  {data && data.label}
-                </p>
-              </div>
-            </>
-          )}
-
-          {data?.uniType === "uniEdgeRight" && (
-            <>
-              <IconCaretRightFilled color="#fff" />
-
-              {data.label && (
-                <div
-                  className="absolute -top-5 right-8 w-36"
-                >
-                  <p className="bg-transparent text-base font-normal text-blue-400">
-                    {data && data.label}
-                  </p>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      </EdgeLabelRenderer>
+      {data?.label && (
+        <EdgeLabelRenderer>
+          <div
+            style={{
+              position: "absolute",
+              transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
+              fontSize: 12,
+              pointerEvents: "all",
+              ...labelStyle,
+            }}
+            className="px-2 py-1 rounded-md bg-slate-800/90 backdrop-blur-sm border border-slate-700 shadow-lg text-sm text-green-400 font-medium hover:bg-slate-700 transition-colors"
+          >
+            {data.label}
+          </div>
+        </EdgeLabelRenderer>
+      )}
     </>
   );
 }
