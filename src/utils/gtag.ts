@@ -22,7 +22,7 @@ export function inHouseAnalytics(event: string, eventRef: Dict) {
   
   if(!email) {
     // Generate a unique anonymous ID if email doesn't exist
-    let anonymousId = localStorage.getItem("anonymousId");
+    let anonymousId = localStorage.getItem("aId");
     if (!anonymousId) {
       // Create unique ID combining timestamp and random string
       anonymousId = `an_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
