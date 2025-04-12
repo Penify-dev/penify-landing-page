@@ -124,8 +124,13 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     // Initialize session timing
     setSessionStartTime(new Date());
-    
+    inHouseAnalytics(ANALYTICS_EVENTS.PAGE_VIEW, {
+      main: "main_page",
+    });
     const handleRouteChange = (url: string) => {
+      // Log only on actual route changes
+      
+      
       // Enhanced page view tracking with more context
       const routeContext = {
         page_path: url,
@@ -155,11 +160,11 @@ export default function App({ Component, pageProps }: AppProps) {
         setSessionStartTime(new Date());
       }
     };
-
+  
     router.events.on("routeChangeComplete", handleRouteChange);
-
+  
     return () => router.events.off("routeChangeComplete", handleRouteChange);
-  }, [router.events, sessionStartTime, isMobile]);
+  }, [router.events, isMobile]);
 
   useEffect(() => {
     // Enhanced click tracking with element context
