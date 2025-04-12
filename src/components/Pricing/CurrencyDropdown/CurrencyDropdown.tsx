@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { CurrencyOptions } from "../../../hooks/useCurrencyConversion";
 import US from "public/icons/country/US.svg";
 import IN from "public/icons/country/IN.svg";
+import { useRouter } from "next/router";
 
 interface CurrencyDropdownProps {
   currency: CurrencyOptions;
@@ -35,6 +36,7 @@ export function CurrencyDropdown({
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [shouldDropdownRender, setShouldDropdownRender] =
     useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (isDropdownOpen) {
@@ -52,6 +54,11 @@ export function CurrencyDropdown({
   const handleCurrencySelect = (code: CurrencyOptions) => {
     handleCurrencyChange(code);
     setIsDropdownOpen(false);
+    
+    // Reload the page to apply currency changes
+    setTimeout(() => {
+      router.reload();
+    }, 100);
   };
 
   return (
