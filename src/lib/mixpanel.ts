@@ -67,6 +67,24 @@ export const mp_register_super_properties = (properties = {}) => {
   }
 };
 
+export const mp_track_video_play = () => {
+  mixpanel.track("Demo Video View");
+}
+
+export const mp_track_contact_form = (username: string, email: string) => {
+  mixpanel.track_forms("#contact_us", "Contact Form Submitted", {
+    username,
+    email,
+  });
+}
+
+export const mp_track_feature_zoom = (featureName: string) => {
+  mixpanel.track("Feature Zoomed", {
+    feature_name: featureName,
+    timestamp: new Date().toISOString(),
+  });
+}
+
 export const mp_increment_property = (property: string, value = 1) => {
   if (MIXPANEL_TOKEN && typeof window !== 'undefined') {
     mixpanel.people.increment(property, value);
