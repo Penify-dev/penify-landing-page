@@ -48,6 +48,12 @@ export function CurrencyDropdown({
   // Find the current currency object
   const currentCurrency = currencies.find((c) => c.code === currency) || currencies[0];
 
+  // Handler to update currency and close dropdown
+  const handleCurrencySelect = (code: CurrencyOptions) => {
+    handleCurrencyChange(code);
+    setIsDropdownOpen(false);
+  };
+
   return (
     <div className="w-fit flex flex-col items-center relative">
       <button
@@ -77,7 +83,7 @@ export function CurrencyDropdown({
             <li
               key={`currency-${currencyIndex}`}
               className="flex items-center gap-x-2 rounded px-3 py-2 capitalize text-gray-800 transition-colors duration-150 ease-in hover:bg-gray-200 hover:text-blue-700 cursor-pointer"
-              onClick={() => handleCurrencyChange(code)}
+              onClick={() => handleCurrencySelect(code)}
             >
               <Image src={flag} alt={title} width={18} height={12} />
               {code}
