@@ -19,6 +19,34 @@ const titleColorMap: Record<string, string> = {
   'Enterprise': 'from-blue-400 to-blue-600',
 };
 
+// Map for currency formatting
+const currencyFormatters: Record<CurrencyOptions, { symbol: string, position: 'prefix' | 'suffix', format: (price: number) => string }> = {
+  'USD': {
+    symbol: '$',
+    position: 'prefix',
+    format: (price) => {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(price)
+    }
+  },
+  'INR': {
+    symbol: '₹',
+    position: 'prefix',
+    format: (price) => {
+      return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(price)
+    }
+  }
+};
+
 export function PricingCard({
   title,
   price,
@@ -28,10 +56,15 @@ export function PricingCard({
   planId,
   getCurrency,
 }: PricingCardProps) {
-  const currencySymbol = currency === 'INR' ? '₹' : '$';
+  const formatter = currencyFormatters[currency] || currencyFormatters.USD;
   const priceNumber = price ? parseInt(price) : null;
   const displayPrice = priceNumber !== null ? getCurrency(priceNumber) : null;
-  const gradientClass = titleColorMap[title] || 'from-gray-400 to-gray-600';  
+  const formattedPrice = displayPrice !== null ? formatter.format(displayPrice) : null;
+  const gradientClass = titleColorMap[title] || 'from-gray-400 to-gray-600';
+  
+  // Clean title (remove "/Private" or "/Public" if present)
+  const displayTitle = title.split('/')[0];
+  
   return (
     <div className={`flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow ${
       popular ? 'border-blue-500 shadow-blue-500/30' : 'border-slate-700'
@@ -45,15 +78,17 @@ export function PricingCard({
       )}
       
       <h3 className={`mb-4 text-2xl font-semibold bg-gradient-to-r ${gradientClass} bg-clip-text text-transparent`}>
-        {title}
+        {displayTitle}
       </h3>
       
       {displayPrice !== null ? (
-        <div className="flex justify-center items-baseline my-4">
-          <span className="mr-2 text-4xl font-extrabold text-white">
-            {currencySymbol}{displayPrice}
-          </span>
-          <span className="text-slate-400">/month</span>
+        <div className="flex flex-col items-center my-4">
+          <div className="flex items-baseline">
+            <span className="text-4xl font-extrabold text-white">
+              {formattedPrice}
+            </span>
+          </div>
+          <span className="text-sm text-slate-400 mt-1">/month</span>
         </div>
       ) : (
         <div className="flex justify-center items-baseline my-8">

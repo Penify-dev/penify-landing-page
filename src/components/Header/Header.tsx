@@ -38,13 +38,15 @@ export default function Header() {
           />
         </Link>
 
-        <div className="flex space-x-3 lg:order-2 lg:space-x-0">
-          <div className="flex items-center h-10 md:h-auto py-2 px-3">
+        <div className="flex items-center space-x-2 lg:order-2">
+          {/* Currency dropdown integrated into header actions */}
+          <div className="border-r border-slate-700 pr-2 mr-1">
             <CurrencyDropdown
               currency={currency}
               handleCurrencyChange={handleCurrencyChange}
             />
           </div>
+
           <Link
             href="https://dashboard.penify.dev/"
             className="inline-flex items-center rounded-lg bg-blue-700 px-5 py-2 text-center text-sm font-medium text-white transition-all duration-200 ease-in hover:bg-blue-800 focus:outline-none focus:ring-blue-300 md:text-base"
