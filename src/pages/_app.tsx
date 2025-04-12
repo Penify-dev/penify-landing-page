@@ -125,7 +125,7 @@ export default function App({ Component, pageProps }: AppProps) {
     // Initialize session timing
     setSessionStartTime(new Date());
     inHouseAnalytics(ANALYTICS_EVENTS.PAGE_VIEW, {
-      main: "main_page",
+      page_path: "/",
     });
     const handleRouteChange = (url: string) => {
       // Log only on actual route changes
