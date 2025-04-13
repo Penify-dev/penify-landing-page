@@ -64,7 +64,7 @@ export default function Features() {
       <Element
         name="features"
         id="features"
-        className="w-full py-12 overflow-hidden md:py-20 bg-gradient-to-b from-slate-900 to-bannerBg"
+        className="w-full py-12 overflow-hidden md:py-20 bg-gradient-to-b from-themeBg to-bannerBg"
       >
         <div className="container mx-auto px-4">
           <div
@@ -72,7 +72,7 @@ export default function Features() {
             data-aos="fade-up"
             data-aos-duration="600"
           >
-            <h3 className="mb-4 inline-flex rounded-full bg-blue-900/30 px-4 py-1.5 text-sm font-semibold text-blue-400">
+            <h3 className="mb-4 inline-flex rounded-full bg-primary-900/40 px-4 py-1.5 text-sm font-semibold text-primary-400">
               Developer Tools
             </h3>
 
@@ -94,7 +94,7 @@ export default function Features() {
               </div>
               <input 
                 type="search"
-                className="block w-full p-3 pl-10 text-sm border rounded-lg bg-slate-800/50 border-slate-700 text-white focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full p-3 pl-10 text-sm border rounded-lg bg-primary-900/20 border-primary-700/30 text-white focus:ring-primary-500 focus:border-primary-500"
                 placeholder="Search features..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -108,8 +108,8 @@ export default function Features() {
                   onClick={() => setActiveTab(category.id)}
                   className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
                     activeTab === category.id 
-                      ? "bg-blue-600 text-white" 
-                      : "bg-slate-800/70 text-slate-300 hover:bg-slate-700"
+                      ? "bg-primary-600 text-white" 
+                      : "bg-primary-900/30 text-slate-300 hover:bg-primary-800/50"
                   }`}
                 >
                   {category.name}
@@ -123,7 +123,7 @@ export default function Features() {
             {filteredFeatures.map((feature, index) => (
               <div
                 key={`feature-item-${index}`}
-                className="relative group bg-slate-800/40 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 flex flex-col cursor-pointer"
+                className="relative group bg-primary-900/20 backdrop-blur-sm rounded-xl overflow-hidden border border-primary-700/30 hover:border-secondary-500/50 transition-all duration-300 flex flex-col cursor-pointer"
                 data-aos="fade-up"
                 data-aos-delay={(100 + (index * 50))+""}
                 onClick={() => handleFeatureZoom(index)}
@@ -136,7 +136,7 @@ export default function Features() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-900 to-transparent opacity-70"></div>
                 </div>
                 
                 <div className="p-6 flex-1 flex flex-col">
@@ -147,7 +147,7 @@ export default function Features() {
                         href={feature.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center h-8 w-8 rounded-full bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white transition-colors z-10"
+                        className="flex items-center justify-center h-8 w-8 rounded-full bg-secondary-600/20 text-secondary-400 hover:bg-secondary-600 hover:text-white transition-colors z-10"
                         aria-label="View demo"
                         onClick={(e) => e.stopPropagation()} // Prevent triggering the card click
                       >
@@ -159,22 +159,22 @@ export default function Features() {
                   <p className="text-slate-300 mb-4">{feature.text}</p>
                   
                   <div className="mt-auto">
-                    <h3 className="text-sm font-semibold text-blue-400 mb-2">Key Benefits:</h3>
+                    <h3 className="text-sm font-semibold text-secondary-400 mb-2">Key Benefits:</h3>
                     <ul className="space-y-2">
                       {feature.children.slice(0, 2).map((child, childIndex) => (
                         <li
                           className="flex items-start gap-2 text-sm text-slate-300"
                           key={`feature-child-${childIndex}`}
                         >
-                          <IconChevronRight className="flex-shrink-0 w-4 h-4 mt-0.5 text-blue-500" />
+                          <IconChevronRight className="flex-shrink-0 w-4 h-4 mt-0.5 text-secondary-500" />
                           <span>{child}</span>
                         </li>
                       ))}
                     </ul>
                     
                     {feature.children.length > 2 && (
-                      <div className="pt-3 mt-2 border-t border-slate-700/50">
-                        <div className="text-sm text-blue-400 flex items-center">
+                      <div className="pt-3 mt-2 border-t border-primary-700/30">
+                        <div className="text-sm text-secondary-400 flex items-center">
                           +{feature.children.length - 2} more benefits
                           <IconChevronRight className="w-4 h-4 ml-1" />
                         </div>
@@ -196,9 +196,9 @@ export default function Features() {
 
       {/* Feature Zoom Modal */}
       {zoomedFeature !== null && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm" onClick={closeZoom}>
+        <div className="fixed inset-0 bg-themeBg/90 z-50 flex items-center justify-center p-4 backdrop-blur-sm" onClick={closeZoom}>
           <div 
-            className="bg-slate-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-primary-900/80 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-primary-700/40"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
           >
             <div className="relative h-72 sm:h-96 overflow-hidden">
@@ -210,7 +210,7 @@ export default function Features() {
                 sizes="(max-width: 1536px) 100vw, 1536px"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-70"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-primary-900 to-transparent opacity-70"></div>
               <button 
                 className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
                 onClick={closeZoom}
@@ -230,7 +230,7 @@ export default function Features() {
                     href={filteredFeatures[zoomedFeature].href || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 py-2 px-4 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                    className="inline-flex items-center gap-2 py-2 px-4 rounded-lg bg-secondary-600 text-white hover:bg-secondary-700 transition-colors"
                   >
                     View Demo <IconExternalLink width={18} />
                   </Link>
@@ -242,14 +242,14 @@ export default function Features() {
               </p>
               
               <div>
-                <h3 className="text-lg font-semibold text-blue-400 mb-4">All Benefits:</h3>
+                <h3 className="text-lg font-semibold text-secondary-400 mb-4">All Benefits:</h3>
                 <ul className="space-y-3 mb-6">
                   {filteredFeatures[zoomedFeature].children.map((benefit, idx) => (
                     <li
                       key={`zoomed-benefit-${idx}`}
                       className="flex items-start gap-3 text-slate-300"
                     >
-                      <IconChevronRight className="flex-shrink-0 w-5 h-5 mt-0.5 text-blue-500" />
+                      <IconChevronRight className="flex-shrink-0 w-5 h-5 mt-0.5 text-secondary-500" />
                       <span>{benefit}</span>
                     </li>
                   ))}

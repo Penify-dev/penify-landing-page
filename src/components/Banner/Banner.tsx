@@ -35,23 +35,23 @@ export default function Banner() {
     <div
       id="marketting-banner"
       tabIndex={-1}
-      className="bg-bannerBg w-full px-4 py-3"
+      className="bg-bannerBg border-b border-primary-800/30 w-full px-4 py-3"
     >
       <div className="container mx-auto">
         <div className="mb-3 me-4 flex flex-col items-center justify-center gap-2 md:mb-0 md:flex-row md:gap-4">
           <div className="flex gap-x-1 sm:items-center">
-            <IconStarFilled width={18} color="#ffbc00" />
-            <IconStarFilled width={18} color="#ffbc00" />
-            <IconStarFilled width={18} color="#ffbc00" />
-            <IconStarFilled width={18} color="#ffbc00" />
-            <IconStarFilled width={18} color="#ffbc00" />
+            <IconStarFilled width={18} color="#38bdf8" />
+            <IconStarFilled width={18} color="#38bdf8" />
+            <IconStarFilled width={18} color="#38bdf8" />
+            <IconStarFilled width={18} color="#38bdf8" />
+            <IconStarFilled width={18} color="#38bdf8" />
             <p className="text-center text-sm font-normal text-slate-200 md:text-base xl:text-lg">
               Trusted globally by{" "}
-              <strong className="inline-block min-w-[60px] text-center">
+              <strong className="inline-block min-w-[60px] text-center text-secondary-400">
                 {isLoading ? "..." : `${counter.users}`}
               </strong>{" "}
               users and Installed on 
-              <strong className="inline-block min-w-[80px] text-center">
+              <strong className="inline-block min-w-[80px] text-center text-secondary-400">
                 {isLoading ? "..." : `${counter.repos}`}
               </strong>{" "}
               repositories

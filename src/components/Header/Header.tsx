@@ -40,7 +40,7 @@ export default function Header() {
 
         <div className="flex items-center space-x-2 lg:order-2">
           {/* Currency dropdown integrated into header actions */}
-          <div className="border-r border-slate-700 pr-2 mr-1">
+          <div className="border-r border-primary-800/40 pr-2 mr-1">
             <CurrencyDropdown
               currency={currency}
               handleCurrencyChange={handleCurrencyChange}
@@ -49,7 +49,7 @@ export default function Header() {
 
           <Link
             href="https://dashboard.penify.dev/"
-            className="inline-flex items-center rounded-lg bg-blue-700 px-5 py-2 text-center text-sm font-medium text-white transition-all duration-200 ease-in hover:bg-blue-800 focus:outline-none focus:ring-blue-300 md:text-base"
+            className="inline-flex items-center rounded-lg bg-primary-600 px-5 py-2 text-center text-sm font-medium text-white transition-all duration-200 ease-in hover:bg-primary-700 focus:outline-none focus:ring-primary-300 md:text-base"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -58,7 +58,7 @@ export default function Header() {
 
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 transition-all duration-200 ease-in hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 md:h-12 md:w-12 lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 transition-all duration-200 ease-in hover:bg-primary-900 focus:outline-none focus:ring-2 focus:ring-primary-700 md:h-12 md:w-12 lg:hidden"
             aria-controls="navbar-sticky"
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -78,7 +78,7 @@ export default function Header() {
           <ul
             className={`${
               shouldMenuRender ? "block" : "hidden"
-            } mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium lg:mt-0 lg:flex lg:flex-row lg:space-x-8 lg:border-0 lg:bg-transparent lg:p-0`}
+            } mt-4 flex flex-col rounded-lg border border-primary-100/10 bg-primary-50/5 p-4 font-medium lg:mt-0 lg:flex lg:flex-row lg:space-x-8 lg:border-0 lg:bg-transparent lg:p-0`}
           >
             {menus.map(({ title, href, scroller, children }, menuIndex) => (
               <li key={`menu-${menuIndex}`} className="lg:relative">
@@ -88,7 +88,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={href}
-                      className="block rounded px-3 py-2 text-sm capitalize text-gray-800 transition-colors duration-150 ease-in hover:bg-gray-200 hover:text-blue-600 md:text-base lg:text-lg lg:bg-transparent lg:p-0 lg:text-white lg:hover:bg-transparent hover:lg:text-blue-400"
+                      className="block rounded px-3 py-2 text-sm capitalize text-gray-800 transition-colors duration-150 ease-in hover:bg-primary-100 hover:text-primary-600 md:text-base lg:text-lg lg:bg-transparent lg:p-0 lg:text-white lg:hover:bg-transparent hover:lg:text-secondary-400"
                     >
                       {title}
                     </Link>

@@ -7,7 +7,6 @@ import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
 import PRICING from "@/utils/pricing.json";
 
 export default function Hero() {
-
   const {
       currency,
       handleCurrencyChange,
@@ -17,9 +16,8 @@ export default function Hero() {
       // handleDeclineLocation,
     } = useCurrencyConversion();
   
-
   return (
-    <section className="w-full py-8 overflow-hidden md:py-16 xl:py-24 ">
+    <section className="w-full py-8 overflow-hidden md:py-16 xl:py-24">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row flex-wrap -m-8">
           <div
@@ -27,14 +25,14 @@ export default function Hero() {
             data-aos="fade-up"
             data-aos-duration="800"
           >
-            <div className="inline-block mb-6 px-4 py-2 font-semibold bg-[#4569e7] rounded-e-full rounded-b-full">
-              <h3 className="text-xs md:text-sm xl:text-base text-slate-200">
+            <div className="inline-block mb-6 px-4 py-2 font-semibold bg-primary-600 rounded-e-full rounded-b-full">
+              <h3 className="text-xs md:text-sm xl:text-base text-white">
                 Do you really need to write documentation?
               </h3>
             </div>
 
             <h1 className="mb-4 md:mb-6 font-bold text-3xl md:text-4xl lg:text-5xl text-slate-200">
-             Docs Pipeline that set devs up for <span className="text-green-400">+ success</span>
+             Docs Pipeline that set devs up for <span className="text-accent-400">+ success</span>
             </h1>
 
             <p className="mb-6 md:mb-8 text-sm text-slate-400 md:text-base lg:text-lg">
@@ -44,8 +42,8 @@ export default function Hero() {
             </p>
 
             <p className="mb-6 md:mb-8 text-sm text-slate-400 md:text-base lg:text-lg">
-            <span className="bg-yellow-200 text-yellow-800 font-bold px-2 py-1 rounded-md hover:bg-yellow-300 cursor-pointer transition duration-300">
-              <a href = "https://github.com/apps/penify-dev/installations/select_target" target="_blank">Now "Document" your entire Repository in less than 1$.</a>
+            <span className="bg-secondary-100 text-secondary-800 font-bold px-2 py-1 rounded-md hover:bg-secondary-200 cursor-pointer transition duration-300">
+              <a href="https://github.com/apps/penify-dev/installations/select_target" target="_blank">Now "Document" your entire Repository in less than 1$.</a>
             </span>
           </p>
 
@@ -54,7 +52,7 @@ export default function Hero() {
 
               <Link
                 href="https://calendly.com/sumansaurabh-snorkell/intro-snorkell-i"
-                className="rounded-lg bg-slate-700 px-5 py-3 text-center text-xs md:text-sm xl:text-base font-medium text-white transition-all duration-200 ease-in hover:bg-slate-800 focus:outline-none focus:ring-slate-300 self-start w-full sm:w-fit flex items-center justify-center gap-2"
+                className="rounded-lg bg-primary-700 px-5 py-3 text-center text-xs md:text-sm xl:text-base font-medium text-white transition-all duration-200 ease-in hover:bg-primary-800 focus:outline-none focus:ring-primary-300 self-start w-full sm:w-fit flex items-center justify-center gap-2"
                 target="_blank"
                 rel="noopener noreferrer"
               >
