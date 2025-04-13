@@ -6,6 +6,12 @@ import { vendors } from "@/utils/teamItems";
 import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
 import PRICING from "@/utils/pricing.json";
 
+/**
+ * Represents a React functional component that renders a section with hero content.
+ *
+ * @function
+ * @returns {JSX.Element} - The rendered JSX for the Hero component.
+ */
 export default function Hero() {
   const {
       currency,
