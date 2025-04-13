@@ -6,6 +6,13 @@ import { Fragment } from "react";
 import patternLeft from "public/images/footer/pattern_left_bg.png";
 import patternRight from "public/images/footer/pattern_right_bg.png";
 
+/**
+ * Represents the footer component of a web page.
+ *
+ * This component includes elements such as the company logo, navigation menus,
+ * copyright information, and social media icons. It is styled with a gradient background
+ * and uses animations for enhanced user experience.
+ */
 export default function Footer() {
   return (
     <footer className="w-full overflow-hidden bg-gradient-to-b from-bannerBg to-primary-900/30 py-8 md:py-16 xl:py-24 relative">
