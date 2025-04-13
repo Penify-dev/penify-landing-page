@@ -6,6 +6,11 @@ import { vendors } from "@/utils/teamItems";
 import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
 import PRICING from "@/utils/pricing.json";
 
+/**
+ * Renders the Hero component which displays information about documentation tools and services.
+ *
+ * @returns {JSX.Element} The rendered Hero component.
+ */
 export default function Hero() {
   const {
       currency,
