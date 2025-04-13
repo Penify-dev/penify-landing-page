@@ -11,22 +11,24 @@ import { PlansTable } from "./PlansTable/PlansTable";
 // Feature highlights for each plan
 const planFeatures = {
   Freemium: [
+    "10 Analysis/Repo",
     "10 Files/Repo Documentation (Public)",
-    "3 Files/Repo Documentation (Private)",
+    "10 Files/Repo Documentation (Private)",
     "10 Commits/Day Documentation Update",
     "PR Summary",
     "40 Swagger Endpoints Documentation",
   ],
   Premium: [
     "All Freemium features",
-    "10 Files/Repo Documentation",
-    "5 Commits/Day Documentation Update",
+    "Unlimited Analysis/Repo",
+    "Unlimited Files Per Repo", 
+    "10 Commits/Day CI",
     "Architecture Documentation",
     "API Documentation with Commit"
   ],
   Pro: [
     "All Premium features",
-    "10 Files/Repo Documentation",
+    "Unlimited Files Per Repo",
     "Unlimited Commits/Day Update",
     "Review PR & Analyze",
     "Authentication for hosted docs"
