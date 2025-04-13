@@ -8,15 +8,15 @@ interface PricingCardProps {
   popular?: boolean;
   features: string[];
   currency: CurrencyOptions;
-  planId: string;
-  getCurrency: (priceInUSD: number) => number;
+  planId: string | null;
+  getCurrency: (price: number) => number;
 }
 
 const titleColorMap: Record<string, string> = {
-  'Freemium': 'from-cyan-400 to-cyan-600',
+  'Freemium': 'from-secondary-400 to-secondary-600',
   'Premium': 'from-yellow-400 to-yellow-600',
-  'Pro': 'from-pink-400 to-pink-600',
-  'Enterprise': 'from-blue-400 to-blue-600',
+  'Pro': 'from-accent-400 to-accent-600',
+  'Enterprise': 'from-primary-400 to-primary-600',
 };
 
 // Map for currency formatting
@@ -44,7 +44,8 @@ const currencyFormatters: Record<CurrencyOptions, { symbol: string, position: 'p
         maximumFractionDigits: 0
       }).format(price)
     }
-  }
+  },
+  // Add more currencies as needed
 };
 
 export function PricingCard({
@@ -60,63 +61,57 @@ export function PricingCard({
   const priceNumber = price ? parseInt(price) : null;
   const displayPrice = priceNumber !== null ? getCurrency(priceNumber) : null;
   const formattedPrice = displayPrice !== null ? formatter.format(displayPrice) : null;
-  const gradientClass = titleColorMap[title] || 'from-gray-400 to-gray-600';
+  const gradientClass = titleColorMap[title.split('/')[0]] || 'from-gray-400 to-gray-600';
   
   // Clean title (remove "/Private" or "/Public" if present)
   const displayTitle = title.split('/')[0];
   
   return (
-    <div className={`flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow ${
-      popular ? 'border-blue-500 shadow-blue-500/30' : 'border-slate-700'
-    } bg-slate-800 xl:p-8`} data-aos="fade-up" data-aos-duration="800" data-aos-delay={popular ? "200" : "0"}>
+    <div className={`flex flex-col p-6 mx-auto max-w-lg text-center rounded-xl border shadow ${
+      popular ? 'border-accent-500 shadow-accent-500/30' : 'border-primary-700'
+    } bg-primary-900/30 backdrop-blur-sm xl:p-8`} data-aos="fade-up" data-aos-duration="800" data-aos-delay={popular ? "200" : "0"}>
       {popular && (
-        <div className="w-full mx-auto -mt-8 mb-3">
-          <span className="bg-blue-700 text-white text-xs font-semibold px-3 py-1 rounded-full">
-            MOST POPULAR
-          </span>
+        <div className="p-1 mb-4 -mt-6 -mx-6 text-center text-white rounded-t-lg bg-gradient-to-r from-accent-500 to-accent-600">
+          <p className="text-xs font-medium">Most Popular</p>
         </div>
       )}
       
-      <h3 className={`mb-4 text-2xl font-semibold bg-gradient-to-r ${gradientClass} bg-clip-text text-transparent`}>
-        {displayTitle}
-      </h3>
+      <h3 className={`mb-4 text-xl font-medium text-white bg-gradient-to-r ${gradientClass} bg-clip-text text-transparent`}>{displayTitle}</h3>
       
       {displayPrice !== null ? (
-        <div className="flex flex-col items-center my-4">
-          <div className="flex items-baseline">
-            <span className="text-4xl font-extrabold text-white">
-              {formattedPrice}
-            </span>
-          </div>
-          <span className="text-sm text-slate-400 mt-1">/month</span>
+        <div className="flex justify-center items-baseline my-4">
+          <span className="mr-2 text-4xl font-extrabold text-white">{formattedPrice}</span>
+          <span className="text-gray-400">/month</span>
         </div>
       ) : (
-        <div className="flex justify-center items-baseline my-8">
-          <span className="text-2xl font-medium text-white">Contact Us</span>
+        <div className="my-4 h-12 flex items-center justify-center">
+          <span className="text-lg font-medium text-white">Contact Us</span>
         </div>
       )}
       
-      <ul role="list" className="mb-8 space-y-4 text-left">
+      {/* Feature List */}
+      <ul role="list" className="mb-8 space-y-3 text-left">
         {features.map((feature, index) => (
-          <li key={index} className="flex items-center space-x-3">
-            <CheckIcon className="flex-shrink-0 w-5 h-5 text-green-500" />
-            <span className="text-slate-300">{feature}</span>
+          <li key={index} className="flex items-start">
+            <div className="flex-shrink-0">
+              <CheckIcon className="h-5 w-5 text-secondary-400" />
+            </div>
+            <p className="ml-3 text-sm text-gray-300">{feature}</p>
           </li>
         ))}
       </ul>
       
-      <Link 
-        href={displayPrice !== null
-          ? `https://dashboard.penify.dev/profile/payments?currency=${currency || "USD"}&plan=${planId}`
-          : "https://calendly.com/sumansaurabh-snorkell/intro-snorkell-i"}
+      <Link
+        href={planId ? `https://github.com/apps/penify-dev/installations/select_target?planId=${planId}` : 'https://calendly.com/sumansaurabh-snorkell/intro-snorkell-i'}
+        className={`inline-flex justify-center items-center font-medium rounded-lg px-5 py-2.5 text-center text-sm transition-colors ${
+          popular 
+            ? 'bg-accent-600 hover:bg-accent-700 text-white' 
+            : 'bg-primary-700/80 hover:bg-primary-700 text-white'
+        }`}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${popular 
-          ? 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500' 
-          : 'bg-slate-700 hover:bg-slate-600 focus:ring-slate-500'} 
-          mt-auto rounded-lg px-5 py-3 text-center text-sm font-medium text-white transition-all duration-200 ease-in focus:outline-none focus:ring-2 focus:ring-opacity-50`}
       >
-        {displayPrice === 0 ? "Start for free" : (displayPrice !== null ? "Choose plan" : "Contact sales")}
+        {planId ? "Get Started" : "Contact Sales"}
       </Link>
     </div>
   );

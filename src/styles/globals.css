@@ -28,7 +28,7 @@
   width: 100%;
   height: 100%;
   z-index: 999999;
-  background-color: #111827;
+  background-color: #0B0F1A;
 }
 
 .loader {
@@ -41,7 +41,7 @@
   margin: -75px 0 0 -75px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #9370db;
+  border-top-color: #6366f1; /* Primary-500 */
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
@@ -55,7 +55,7 @@
   bottom: 5px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #ba55d3;
+  border-top-color: #38bdf8; /* Secondary-400 */
   -webkit-animation: spin 3s linear infinite;
   animation: spin 3s linear infinite;
 }
@@ -69,7 +69,7 @@
   bottom: 15px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #ff00ff;
+  border-top-color: #d946ef; /* Accent-500 */
   -webkit-animation: spin 1.5s linear infinite;
   animation: spin 1.5s linear infinite;
 }

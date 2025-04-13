@@ -18,7 +18,7 @@ export default function Accordion({
 
   return (
     <div
-      className="mb-4 w-full rounded-xl border border-slate-400 bg-transparent px-6 py-4 shadow-lg md:mb-6 md:px-8 md:py-6"
+      className="mb-4 w-full rounded-xl border border-primary-700/40 bg-primary-900/20 backdrop-blur-sm px-6 py-4 shadow-lg md:mb-6 md:px-8 md:py-6 hover:border-primary-600/50 transition-colors"
       data-aos="fade-up"
       data-aos-duration="800"
     >
@@ -38,7 +38,7 @@ export default function Accordion({
 
           <div className="w-auto py-2">
             <IconChevronDown
-              className={`h-4 w-4 origin-center transform text-slate-200 transition duration-200 ease-out md:h-6 md:w-6 ${
+              className={`h-4 w-4 origin-center transform text-secondary-400 transition duration-200 ease-out md:h-6 md:w-6 ${
                 isAccordionOpen ? "rotate-180" : ""
               }`}
             />

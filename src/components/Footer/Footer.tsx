@@ -8,7 +8,7 @@ import patternRight from "public/images/footer/pattern_right_bg.png";
 
 export default function Footer() {
   return (
-    <footer className="w-full overflow-hidden bg-transparent py-8 md:py-16 xl:py-24 relative">
+    <footer className="w-full overflow-hidden bg-gradient-to-b from-bannerBg to-primary-900/30 py-8 md:py-16 xl:py-24 relative">
       <div className="container mx-auto px-4">
         <div className="md:flex md:justify-between">
           <div
@@ -35,7 +35,7 @@ export default function Footer() {
                 data-aos-duration="800"
                 data-aos-delay="200"
               >
-                <h2 className="mb-6 text-sm font-semibold uppercase text-slate-200 md:text-base xl:text-lg">
+                <h2 className="mb-6 text-sm font-semibold uppercase text-primary-200 md:text-base xl:text-lg">
                   {title}
                 </h2>
 
@@ -50,14 +50,14 @@ export default function Footer() {
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-block transition-all duration-200 ease-in hover:translate-x-2 hover:text-blue-400 hover:underline"
+                          className="inline-block transition-all duration-200 ease-in hover:translate-x-2 hover:text-secondary-400 hover:underline"
                         >
                           {title}
                         </Link>
                       ) : (
                         <Link
                           href={href}
-                          className="inline-block transition-all duration-200 ease-in hover:translate-x-2 hover:text-blue-400 hover:underline"
+                          className="inline-block transition-all duration-200 ease-in hover:translate-x-2 hover:text-secondary-400 hover:underline"
                         >
                           {title}
                         </Link>
@@ -70,7 +70,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <hr className="my-6 border-slate-600 sm:mx-auto lg:my-8" />
+        <hr className="my-6 border-primary-700/50 sm:mx-auto lg:my-8" />
 
         <div
           className="sm:flex sm:flex-wrap sm:items-center sm:justify-center md:justify-between"
@@ -86,7 +86,7 @@ export default function Footer() {
               <Fragment key={`social-icon-${socialIconIndex}`}>
                 <Link
                   href={href}
-                  className="mx-3 text-slate-400 hover:text-slate-500"
+                  className="mx-3 text-slate-400 hover:text-secondary-500 transition-colors"
                 >
                   {icon}
 
@@ -102,13 +102,13 @@ export default function Footer() {
         src={patternLeft}
         loading="lazy"
         alt="left pattern background"
-        className="animate-footer-pulse absolute left-0 top-4 md:top-12 xl:top-20"
+        className="animate-footer-pulse absolute left-0 top-4 opacity-30 md:top-12 md:opacity-50 xl:top-20"
       />
       <Image
         src={patternRight}
         loading="lazy"
         alt="right pattern background"
-        className="animate-footer-pulse-reversed absolute bottom-16 right-0 sm:bottom-20 md:bottom-24 xl:bottom-32"
+        className="animate-footer-pulse-reversed absolute bottom-16 right-0 opacity-30 sm:bottom-20 md:bottom-24 md:opacity-50 xl:bottom-32"
       />
     </footer>
   );
