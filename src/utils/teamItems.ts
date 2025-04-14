@@ -56,6 +56,14 @@ export const vendors: VendorsTypes = [
     title: "Install on Bitbucket",
     href: "https://production-gateway.snorkell.ai/api/bitbucket/installation-link",
   },
+  {
+    title: "📖 How-to guide",
+    href: "https://docs.penify.dev/docs/what-is-penify.html",
+  },
+  {
+    title: "👩‍💻 Request Assistance",
+    href: "https://calendly.com/sumansaurabh-snorkell/intro-snorkell-i",
+  },
 ];
 
 export const vendors2: VendorsTypes = [
