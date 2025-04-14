@@ -48,7 +48,7 @@ export default function Hero() {
           </p>
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-2.5 -my-2.5">
-              <Dropwdown title="Get Started" items={vendors} type="hero" />
+              <Dropwdown title="Easy Install" items={vendors} type="hero" />
 
               <Link
                 href="https://calendly.com/sumansaurabh-snorkell/intro-snorkell-i"
