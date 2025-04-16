@@ -8,6 +8,19 @@ interface BannerOfferProps {
   getCurrency: (price: number) => number;
 }
 
+/**
+ * Renders a banner offer with a display price and currency symbol.
+ *
+ * @param {Object} props - The component's props.
+ * @param {number} props.price - The price of the offer.
+ * @param {string} props.currency - The currency code for the price.
+ * @param {Function} props.getCurrency - A function that takes the price and returns a formatted currency string.
+ * @returns {JSX.Element} - A React element representing the banner offer.
+ *
+ * @example
+ * const formatPrice = (price) => `$${price.toFixed(2)}`;
+ * <BannerOffer price={19.99} currency="USD" getCurrency={formatPrice} />
+ */
 export function BannerOffer({ price, currency, getCurrency }: BannerOfferProps) {
   const displayPrice = getCurrency(price);
   const currencySymbol = currency === "INR" ? "₹" : "$";

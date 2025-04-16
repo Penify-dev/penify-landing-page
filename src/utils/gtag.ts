@@ -13,6 +13,20 @@ const isBrowser = (): boolean => {
 };
 
 // Utility function to add referrer parameter to URLs
+/**
+ * Adds a referrer parameter to an external URL if it doesn't already contain one.
+ *
+ * @param {string} url - The URL to modify.
+ * @returns {string} - The modified URL with the referrer parameter added if necessary.
+ *
+ * @example
+ * // Returns "https://external.com?ref=penify_landing"
+ * addReferrerToUrl("https://external.com")
+ *
+ * @example
+ * // Returns "relative/path"
+ * addReferrerToUrl("relative/path")
+ */
 export function addReferrerToUrl(url: string): string {
   if (!url) return url;
   
@@ -29,6 +43,17 @@ export function addReferrerToUrl(url: string): string {
   }
 }
 
+/**
+ * Tracks an event with analytics data.
+ *
+ * This function checks if the environment is a browser and if it's not running on localhost.
+ * It retrieves or generates a unique identifier (email) based on whether an email exists in localStorage.
+ * Analytics data is then sent to a specified endpoint using the Fetch API.
+ *
+ * @param {string} event - The type of event being tracked.
+ * @param {Dict} eventRef - Additional reference data for the event.
+ * @returns {void}
+ */
 export function inHouseAnalytics(event: string, eventRef: Dict) {
   if (!isBrowser()) return;
   // if localhost, return
