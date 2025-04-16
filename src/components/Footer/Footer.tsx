@@ -7,6 +7,12 @@ import patternLeft from "public/images/footer/pattern_left_bg.png";
 import patternRight from "public/images/footer/pattern_right_bg.png";
 import { addReferrerToUrl } from "@/utils/gtag";
 
+/**
+ * The Footer component is a React functional component that renders a footer section for a webpage.
+ * It includes the Penify logo, navigation menus, legal information, and social icons.
+ *
+ * @returns {JSX.Element} - A JSX element representing the footer component.
+ */
 export default function Footer() {
   const router = useRouter();
 
