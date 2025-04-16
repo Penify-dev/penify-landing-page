@@ -1,12 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import logo from "public/penify-logo.svg?url";
-import { footerItems, socialIcons } from "@/utils/footerItems";
+import { useRouter } from "next/router";
 import { Fragment } from "react";
+import { footerItems, socialIcons } from "@/utils/footerItems";
 import patternLeft from "public/images/footer/pattern_left_bg.png";
 import patternRight from "public/images/footer/pattern_right_bg.png";
+import { addReferrerToUrl } from "@/utils/gtag";
 
 export default function Footer() {
+  const router = useRouter();
+
   return (
     <footer className="w-full overflow-hidden bg-gradient-to-b from-bannerBg to-primary-900/30 py-8 md:py-16 xl:py-24 relative">
       <div className="container mx-auto px-4">
@@ -47,7 +50,7 @@ export default function Footer() {
                     >
                       {mode === "external" ? (
                         <Link
-                          href={href}
+                          href={addReferrerToUrl(href)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-block transition-all duration-200 ease-in hover:translate-x-2 hover:text-secondary-400 hover:underline"
@@ -85,8 +88,10 @@ export default function Footer() {
             {socialIcons.map(({ title, icon, href }, socialIconIndex) => (
               <Fragment key={`social-icon-${socialIconIndex}`}>
                 <Link
-                  href={href}
+                  href={addReferrerToUrl(href)}
                   className="mx-3 text-slate-400 hover:text-secondary-500 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {icon}
 

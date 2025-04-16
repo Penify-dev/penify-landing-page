@@ -12,6 +12,23 @@ const isBrowser = (): boolean => {
   return typeof window !== 'undefined' && window.document !== undefined;
 };
 
+// Utility function to add referrer parameter to URLs
+export function addReferrerToUrl(url: string): string {
+  if (!url) return url;
+  
+  try {
+    const urlObj = new URL(url);
+    // Only add the referrer if it's an external URL and doesn't already have the parameter
+    if (urlObj.hostname !== window.location.hostname && !urlObj.searchParams.has('ref')) {
+      urlObj.searchParams.append('ref', 'penify_landing');
+    }
+    return urlObj.toString();
+  } catch (e) {
+    // If the URL is invalid or relative, just return it as is
+    return url;
+  }
+}
+
 export function inHouseAnalytics(event: string, eventRef: Dict) {
   if (!isBrowser()) return;
   // if localhost, return

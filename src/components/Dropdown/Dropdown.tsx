@@ -5,6 +5,7 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { addReferrerToUrl } from "@/utils/gtag";
 
 interface DropwdownProps {
   title: string;
@@ -93,7 +94,7 @@ export function Dropwdown({ title, items, type }: DropwdownProps) {
             items.map(({ title, href, vendor }, itemIndex) => (
               <li key={`dropdown-${type}-${itemIndex}`}>
                 <Link
-                  href={href}
+                  href={addReferrerToUrl(href)}
                   className={`flex items-center gap-x-1 rounded px-3 py-2 capitalize text-gray-800 transition-colors duration-150 ease-in hover:bg-gray-200 hover:text-blue-700 ${dropdownStyles[type].link}`}
                   target="_blank"
                   rel="noopener noreferrer"

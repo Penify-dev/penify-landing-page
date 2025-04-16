@@ -7,6 +7,7 @@ import { Scroller as ScrollerLink } from "../Scroller/Scroller";
 import { Dropwdown } from "../Dropdown/Dropdown";
 import { CurrencyDropdown } from "../Pricing/CurrencyDropdown/CurrencyDropdown";
 import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
+import { addReferrerToUrl } from "@/utils/gtag";
 
 export default function Header() {
   const { currency, handleCurrencyChange, getCurrency } =
@@ -48,7 +49,7 @@ export default function Header() {
           </div>
 
           <Link
-            href="https://dashboard.penify.dev/"
+            href={addReferrerToUrl("https://dashboard.penify.dev/")}
             className="inline-flex items-center rounded-lg bg-primary-600 px-5 py-2 text-center text-sm font-medium text-white transition-all duration-200 ease-in hover:bg-primary-700 focus:outline-none focus:ring-primary-300 md:text-base"
             target="_blank"
             rel="noopener noreferrer"
