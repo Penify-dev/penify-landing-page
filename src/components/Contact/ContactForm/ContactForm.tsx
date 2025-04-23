@@ -76,20 +76,20 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mx-auto max-w-lg px-4 py-6"
+      className="mx-auto max-w-lg px-3 sm:px-4 py-4 sm:py-6"
       id="contact_us"
     >
-      <div className="mb-6 md:mb-4">
+      <div className="mb-4 sm:mb-6 md:mb-4">
         <label
           htmlFor="name"
-          className="mb-2 block text-xs font-medium text-slate-200 md:text-sm xl:text-base"
+          className="mb-1.5 sm:mb-2 block text-xs font-medium text-slate-200 md:text-sm xl:text-base"
         >
           Name
         </label>
         <input
           type="text"
           id="name"
-          className={`w-full border px-4 py-2 ${
+          className={`w-full border px-3 sm:px-4 py-1.5 sm:py-2 text-sm ${
             errors.name ? "border-red-500" : "border-gray-300"
           } rounded-md shadow-sm focus:outline-none`}
           placeholder="Penify"
@@ -106,24 +106,24 @@ export function ContactForm() {
           })}
         />
         {errors.name && (
-          <span className="block mt-2 text-xs md:text-sm xl:text-base text-red-600">
+          <span className="block mt-1.5 sm:mt-2 text-xs md:text-sm xl:text-base text-red-600">
             {errors.name.message}
           </span>
         )}
       </div>
 
-      <div className="mb-6 md:mb-4">
+      <div className="mb-4 sm:mb-6 md:mb-4">
         <label
           htmlFor="email"
-          className="block text-xs md:text-sm xl:text-base font-medium text-slate-200 mb-2"
+          className="block text-xs md:text-sm xl:text-base font-medium text-slate-200 mb-1.5 sm:mb-2"
         >
           Email
         </label>
         <input
           type="email"
           id="email"
-          className={`w-full border px-4 py-2 ${
-            errors.name ? "border-red-500" : "border-gray-300"
+          className={`w-full border px-3 sm:px-4 py-1.5 sm:py-2 text-sm ${
+            errors.email ? "border-red-500" : "border-gray-300"
           } rounded-md shadow-sm focus:outline-none`}
           placeholder="support@penify.dev"
           {...register("email", {
@@ -135,30 +135,30 @@ export function ContactForm() {
           })}
         />
         {errors.email && (
-          <span className="mt-2 block text-xs text-red-600 md:text-sm xl:text-base">
+          <span className="mt-1.5 sm:mt-2 block text-xs text-red-600 md:text-sm xl:text-base">
             {errors.email.message}
           </span>
         )}
       </div>
 
-      <div className="mb-8 md:mb-6">
+      <div className="mb-6 sm:mb-8 md:mb-6">
         <label
           htmlFor="message"
-          className="block text-xs md:text-sm xl:text-base font-medium text-slate-200 mb-2"
+          className="block text-xs md:text-sm xl:text-base font-medium text-slate-200 mb-1.5 sm:mb-2"
         >
           Message
         </label>
         <textarea
           id="message"
           rows={4}
-          className={`w-full border px-4 py-2 ${
-            errors.name ? "border-red-500" : "border-gray-300"
+          className={`w-full border px-3 sm:px-4 py-1.5 sm:py-2 text-sm ${
+            errors.message ? "border-red-500" : "border-gray-300"
           } rounded-md shadow-sm focus:outline-none`}
           placeholder="Leave a comment..."
           {...register("message", { required: "Message is required" })}
         />
         {errors.message && (
-          <span className="mt-2 block text-xs text-red-600 md:text-sm xl:text-base">
+          <span className="mt-1.5 sm:mt-2 block text-xs text-red-600 md:text-sm xl:text-base">
             {errors.message.message}
           </span>
         )}
@@ -166,13 +166,13 @@ export function ContactForm() {
 
       <button
         type="submit"
-        className={`inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 ${
+        className={`inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3 sm:px-4 py-1.5 sm:py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 ${
           isSubmitting ? "cursor-not-allowed opacity-50" : ""
         }`}
         disabled={isSubmitting}
       >
         {isSubmitting ? "Sending..." : "Send Message"}
-        {isSubmitting ? "" : <IconBrandTelegram />}
+        {isSubmitting ? "" : <IconBrandTelegram className="w-4 h-4 sm:w-5 sm:h-5" />}
       </button>
     </form>
   );

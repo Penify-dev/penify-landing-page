@@ -26,22 +26,22 @@ export default function Header() {
   }, [isMenuOpen]);
 
   return (
-    <nav className="bg-themeBg sticky start-0 top-0 z-20 w-full py-4 shadow-lg md:py-6">
-      <div className="container mx-auto flex flex-wrap items-center justify-between px-4">
+    <nav className="bg-themeBg sticky start-0 top-0 z-20 w-full py-3 shadow-lg md:py-6">
+      <div className="container mx-auto flex flex-wrap items-center justify-between px-2 sm:px-4">
         <Link href="/" className="inline-block">
           <Image
             src="/penify-logo.svg"
             width={140}
             height={40}
-            className="h-10 w-auto md:h-12 xl:h-14"
+            className="h-8 w-auto md:h-12 xl:h-14"
             alt="Penify Logo"
             priority
           />
         </Link>
 
-        <div className="flex items-center space-x-2 lg:order-2">
+        <div className="flex items-center space-x-1 sm:space-x-2 lg:order-2">
           {/* Currency dropdown integrated into header actions */}
-          <div className="border-r border-primary-800/40 pr-2 mr-1">
+          <div className="border-r border-primary-800/40 pr-1 mr-1">
             <CurrencyDropdown
               currency={currency}
               handleCurrencyChange={handleCurrencyChange}
@@ -50,7 +50,7 @@ export default function Header() {
 
           <Link
             href={addReferrerToUrl("https://dashboard.penify.dev/")}
-            className="inline-flex items-center rounded-lg bg-primary-600 px-5 py-2 text-center text-sm font-medium text-white transition-all duration-200 ease-in hover:bg-primary-700 focus:outline-none focus:ring-primary-300 md:text-base"
+            className="inline-flex items-center rounded-lg bg-primary-600 px-3 py-1.5 sm:px-5 sm:py-2 text-center text-xs sm:text-sm font-medium text-white transition-all duration-200 ease-in hover:bg-primary-700 focus:outline-none focus:ring-primary-300 md:text-base"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -59,13 +59,13 @@ export default function Header() {
 
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 transition-all duration-200 ease-in hover:bg-primary-900 focus:outline-none focus:ring-2 focus:ring-primary-700 md:h-12 md:w-12 lg:hidden"
+            className="inline-flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg p-1.5 sm:p-2 text-sm text-gray-500 transition-all duration-200 ease-in hover:bg-primary-900 focus:outline-none focus:ring-2 focus:ring-primary-700 md:h-12 md:w-12 lg:hidden"
             aria-controls="navbar-sticky"
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen((prev) => !prev)}
           >
             <span className="sr-only">Open main menu</span>
-            <IconMenu2 className="md:w-7 md:h-7" />
+            <IconMenu2 className="sm:w-6 sm:h-6 md:w-7 md:h-7" />
           </button>
         </div>
 
