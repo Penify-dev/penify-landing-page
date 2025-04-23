@@ -18,9 +18,18 @@ export function addReferrerToUrl(url: string): string {
   
   try {
     const urlObj = new URL(url);
+    let aId = localStorage.getItem("aId");
+    const email = localStorage.getItem("email");
+    if(email) {
+      aId = email;
+    }
+
     // Only add the referrer if it's an external URL and doesn't already have the parameter
     if (urlObj.hostname !== window.location.hostname && !urlObj.searchParams.has('ref')) {
       urlObj.searchParams.append('ref', 'penify_landing');
+      if(aId) {
+        urlObj.searchParams.append('aId', aId);
+      }
     }
     return urlObj.toString();
   } catch (e) {
