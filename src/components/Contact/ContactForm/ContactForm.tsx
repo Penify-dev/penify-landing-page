@@ -10,6 +10,15 @@ interface FormData {
   message: string;
 }
 
+/**
+ * Renders a contact form component.
+ *
+ * This component uses React Hook Form for form handling and validation.
+ * It sends the form data to an API endpoint when submitted, handles success and error messages,
+ * and tracks events using Google Analytics and in-house analytics.
+ *
+ * @returns {JSX.Element} - The rendered contact form.
+ */
 export function ContactForm() {
   const {
     register,
