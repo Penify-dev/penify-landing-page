@@ -13,6 +13,20 @@ const isBrowser = (): boolean => {
 };
 
 // Utility function to add referrer parameter to URLs
+/**
+ * Adds a referrer parameter to a URL if it is an external URL and doesn't already have the parameter.
+ *
+ * @param {string} url - The URL to which the referrer should be added.
+ * @returns {string} - The modified URL with the referrer parameter appended if applicable.
+ *
+ * @example
+ * // Returns 'https://example.com?ref=penify_landing&aId=12345'
+ * addReferrerToUrl('https://example.com');
+ *
+ * @example
+ * // Returns 'http://localhost:3000/page.html' (no change)
+ * addReferrerToUrl('http://localhost:3000/page.html?ref=external');
+ */
 export function addReferrerToUrl(url: string): string {
   if (!url) return url;
   
