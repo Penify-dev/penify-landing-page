@@ -22,7 +22,7 @@ export function FeatureComparison({ initiallyOpen = false }: FeatureComparisonPr
     <div className="w-full mt-12">
       {isMobile ? (
         <a
-          href="https://docs.penify.dev/pricing"
+          href="https://docs.penify.dev/docs/penify-pricing.html"
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full text-center text-blue-400 underline py-4 bg-slate-900 rounded-lg border border-slate-700"
