@@ -68,7 +68,7 @@ export default function Hero() {
             </div>
           </div>
           <div
-            className="w-full sm:block lg:w-3/5 p-3 sm:p-6 lg:p-0 overflow-x-hidden overflow-y-visible mt-4 lg:mt-0"
+            className="hidden lg:block w-full lg:w-3/5 p-3 sm:p-6 lg:p-0 overflow-x-hidden overflow-y-visible mt-4 lg:mt-0"
             data-aos="fade-up"
             data-aos-duration="800"
             data-aos-delay="200"
