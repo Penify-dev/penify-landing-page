@@ -30,7 +30,7 @@ export default function Footer() {
             </Link>
           </div>
 
-          <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-6 md:w-4/5 md:grid-cols-3">
+          <div className="grid w-full grid-cols-2 gap-6 sm:grid-cols-3 md:w-4/5 md:grid-cols-3">
             {footerItems.map(({ title, children }, footerIndex) => (
               <div
                 key={`footer-menu-${footerIndex}`}
