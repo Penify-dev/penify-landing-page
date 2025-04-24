@@ -35,7 +35,7 @@ export default function Banner() {
     <div
       id="marketting-banner"
       tabIndex={-1}
-      className="bg-bannerBg border-b border-primary-800/30 w-full px-4 py-3"
+      className="hidden md:block bg-bannerBg border-b border-primary-800/30 w-full px-4 py-3"
     >
       <div className="container mx-auto">
         <div className="mb-3 me-4 flex flex-col items-center justify-center gap-2 md:mb-0 md:flex-row md:gap-4">
