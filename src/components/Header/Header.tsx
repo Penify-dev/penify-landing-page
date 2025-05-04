@@ -9,6 +9,12 @@ import { CurrencyDropdown } from "../Pricing/CurrencyDropdown/CurrencyDropdown";
 import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
 import { addReferrerToUrl } from "@/utils/gtag";
 
+/**
+ * The Header component renders the main navigation bar for the application.
+ * It includes a logo, currency dropdown, dashboard link, and a mobile menu button.
+ *
+ * @returns {ReactElement} - The rendered Header component.
+ */
 export default function Header() {
   const { currency, handleCurrencyChange, getCurrency } =
     useCurrencyConversion();

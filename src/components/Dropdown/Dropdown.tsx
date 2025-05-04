@@ -49,6 +49,18 @@ const dropdownStyles: DropdownStylesTypes = {
   },
 };
 
+/**
+ * Renders a dropdown menu component with various options.
+ *
+ * @param {Object} props - The properties for the Dropdown component.
+ * @param {string} props.title - The title of the dropdown button.
+ * @param {Array<{title: string, href: string, vendor: string}>} props.items - An array of items to be displayed in the dropdown menu.
+ * @param {string} props.type - The type of the dropdown, affecting its styling and behavior.
+ * @returns {JSX.Element} - The rendered Dropdown component.
+ *
+ * @example
+ * <Dropdown title="Select an option" items={[{title: "Option 1", href: "/option1", vendor: "github"}, {title: "Option 2", href: "/option2", vendor: "bitbucket"}]} type="default"/>
+ */
 export function Dropwdown({ title, items, type }: DropwdownProps) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [shouldMenuRender, setShouldMenuRender] = useState<boolean>(false);
