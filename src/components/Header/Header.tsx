@@ -9,6 +9,11 @@ import { CurrencyDropdown } from "../Pricing/CurrencyDropdown/CurrencyDropdown";
 import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
 import { addReferrerToUrl } from "@/utils/gtag";
 
+/**
+ * Renders a header component with a logo, currency dropdown, and navigation menus.
+ *
+ * @returns {JSX.Element} - The rendered header component.
+ */
 export default function Header() {
   const { currency, handleCurrencyChange, getCurrency } =
     useCurrencyConversion();
