@@ -1,6 +1,11 @@
 import { Element } from "react-scroll";
 import { YoutubeEmbed } from "../Youtube/Youtube";
 
+/**
+ * Represents a functional component that renders a tour section for documentation automation.
+ *
+ * @returns {React.ReactNode} - The rendered React component.
+ */
 export default function Tour() {
   return (
     <section>
