@@ -7,6 +7,13 @@ import patternLeft from "public/images/footer/pattern_left_bg.png";
 import patternRight from "public/images/footer/pattern_right_bg.png";
 import { addReferrerToUrl } from "@/utils/gtag";
 
+/**
+ * Represents the footer component of a web page.
+ *
+ * This component includes elements such as the company logo, navigation menus,
+ * copyright information, and social media icons. It is styled with a gradient background
+ * and uses animations for enhanced user experience.
+ */
 export default function Footer() {
   const router = useRouter();
 

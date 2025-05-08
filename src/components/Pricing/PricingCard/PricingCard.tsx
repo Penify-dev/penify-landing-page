@@ -48,6 +48,19 @@ const currencyFormatters: Record<CurrencyOptions, { symbol: string, position: 'p
   // Add more currencies as needed
 };
 
+/**
+ * Renders a pricing card component with title, price, features, and other details.
+ *
+ * @param {Object} props - The properties for the PricingCard component.
+ * @param {string} props.title - The title of the pricing plan, optionally including "/Private" or "/Public".
+ * @param {number|string} props.price - The price of the plan in cents. If not provided, displays "Contact Us".
+ * @param {boolean} [props.popular=false] - Whether this is the most popular plan.
+ * @param {Array<string>} props.features - An array of features to be displayed on the pricing card.
+ * @param {string} props.currency - The currency code for formatting the price. Defaults to USD if not provided.
+ * @param {string} props.planId - The ID of the plan, used in the link for installation or contact form submission.
+ * @param {Function} props.getCurrency - A function that formats a given price number based on the currency.
+ * @returns {JSX.Element} - JSX element representing the pricing card.
+ */
 export function PricingCard({
   title,
   price,
