@@ -38,6 +38,13 @@ const ANALYTICS_EVENTS = {
   ERROR: "error",
 };
 
+/**
+ * @penify
+ * Calculates the sum of two numbers
+ * @param a The first number
+ * @param b The second number
+ * @returns The sum of a and b
+ */
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
@@ -127,6 +134,12 @@ export default function App({ Component, pageProps }: AppProps) {
     inHouseAnalytics(ANALYTICS_EVENTS.PAGE_VIEW, {
       page_path: "/",
     });
+    /**
+     * Handles route changes by logging them and tracking page views, time spent on previous pages,
+     * and sending analytics events to Google Analytics (GA), Mixpanel, and in-house analytics.
+     *
+     * @param {string} url - The URL of the new page being navigated to.
+     */
     const handleRouteChange = (url: string) => {
       // Log only on actual route changes
       
