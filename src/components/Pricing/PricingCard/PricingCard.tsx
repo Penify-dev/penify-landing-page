@@ -9,6 +9,7 @@ interface PricingCardProps {
   features: string[];
   currency: CurrencyOptions;
   planId: string | null;
+  billingCycle: 'monthly' | 'yearly';
   getCurrency: (price: number) => number;
 }
 
@@ -56,6 +57,7 @@ export function PricingCard({
   currency,
   planId,
   getCurrency,
+  billingCycle,
 }: PricingCardProps) {
   const formatter = currencyFormatters[currency] || currencyFormatters.USD;
   const priceNumber = price ? parseInt(price) : null;
@@ -81,7 +83,7 @@ export function PricingCard({
       {displayPrice !== null ? (
         <div className="flex justify-center items-baseline my-4">
           <span className="mr-2 text-4xl font-extrabold text-white">{formattedPrice}</span>
-          <span className="text-gray-400">/month</span>
+          <span className="text-gray-400">/  {billingCycle}</span>
         </div>
       ) : (
         <div className="my-4 h-12 flex items-center justify-center">

@@ -1,12 +1,10 @@
 import { Element } from "react-scroll";
-import { useCurrencyConversion } from "@/hooks/useCurrencyConversion";
-import { use, useEffect, useState } from "react";
-import { getPlanPrice, PlanTypes } from "@/api/pricing";
 import PRICING from "@/utils/pricing.json";
 import { PricingCard } from "./PricingCard/PricingCard";
 import { BannerOffer } from "./BannerOffer/BannerOffer";
 import { FeatureComparison } from "./FeatureComparison/FeatureComparison";
 import { PlansTable } from "./PlansTable/PlansTable";
+import { usePricing } from "@/hooks/usePricing";
 
 // Feature highlights for each plan
 const planFeatures = {
@@ -47,66 +45,15 @@ type PricingOption = 'oneTime' | 'subscription';
 export default function Pricing() {
   const {
     currency,
-    handleCurrencyChange,
     getCurrency,
-  } = useCurrencyConversion();
-  
-  const [isLoading, setIsLoading] = useState(true);
-  const [pricingPlans, setPricingPlans] = useState(PRICING.plans);
-  const [fullRepoPrice, setFullRepoPrice] = useState(PRICING.fullRepoPlan.amount);
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
-  const [pricingOption, setPricingOption] = useState<PricingOption>('oneTime');
-  const [planPriceFromAPI, setPlanPriceFromAPI] = useState<PlanTypes>({});
-
-  useEffect(() => {
-    setIsLoading(true);
-    getPlanPrice().then((data: PlanTypes) => {
-      if (!Object.keys(data).length) {
-        setIsLoading(false);
-        return;
-      }
-      setPlanPriceFromAPI(data);
-      
-      // Update full repo price
-      const fullRepoKey = PRICING.fullRepoPlan.planId;
-      if(data[fullRepoKey]) {
-        setFullRepoPrice(data[fullRepoKey].amount);
-      }
-      
-      // Update plan prices
-      const updatedPlans = [...pricingPlans].map(plan => {
-        const planKey = plan.planIdPerMonth;
-        if (planKey && data[planKey]) {
-          return { ...plan, price: data[planKey].amount + "" };
-        }
-        return plan;
-      });
-      setPricingPlans(updatedPlans);
-      setIsLoading(false);
-    }).catch(() => {
-      setIsLoading(false);
-    });
-  }, []);
-
-  useEffect(() => {
-    let workingPricingPlans = [...pricingPlans];
-    if(Object.keys(planPriceFromAPI).length === 0) {
-      // api gateway is not available
-      workingPricingPlans = [...PRICING.plans];
-    }
-    const updatedPlans = workingPricingPlans.map(plan => {
-      const planKey = plan.planIdPerMonth;
-      if (billingCycle === 'yearly' && plan.price) {
-        return { ...plan, price: parseInt(parseInt(plan.price)*12*0.8+"") + "" };
-      }
-
-      if (planKey && planPriceFromAPI[planKey]) {
-        return { ...plan, price: planPriceFromAPI[planKey].amount + "" };
-      }
-      return plan;
-    });    
-    setPricingPlans(updatedPlans);
-  }, [billingCycle]);
+    isLoading,
+    pricingPlans,
+    fullRepoPrice,
+    billingCycle,
+    setBillingCycle,
+    pricingOption,
+    setPricingOption,
+  } = usePricing();
 
   return (
     <section>
@@ -260,6 +207,7 @@ export default function Pricing() {
                       currency={currency}
                       planId={billingCycle === 'monthly' ? plan.planIdPerMonth : plan.planIdPerYear}
                       getCurrency={getCurrency}
+                      billingCycle={billingCycle}
                     />
                   ))}
                 </div>
