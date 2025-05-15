@@ -13,30 +13,27 @@ const planFeatures = {
     "10 Files/Repo Documentation (Public)",
     "10 Files/Repo Documentation (Private)",
     "10 Commits/Day Documentation Update",
-    "PR Summary",
+    "10 PR Summary per Day",
     "40 Swagger Endpoints Documentation",
   ],
   Premium: [
     "All Freemium features",
-    "Unlimited Analysis/Repo",
-    "Unlimited Files Per Repo", 
+    "♾️ Analysis/Repo",
+    "♾️ Files Per Repo", 
     "10 Commits/Day CI",
-    "Architecture Documentation",
-    "API Documentation with Commit"
+    "1 Architecture Docs/month",
   ],
   Pro: [
     "All Premium features",
-    "Unlimited Files Per Repo",
-    "Unlimited Commits/Day Update",
-    "Review PR & Analyze",
-    "Authentication for hosted docs"
+    "♾️ Swagger Endpoints Documentation",
+    "♾️ Architecture Docs/month",
+    "♾️ Commits/Day Update",
   ],
   Enterprise: [
     "All Pro features",
-    "Unlimited Files Documentation",
-    "Unlimited Commits/Day Update",
-    "Find similar components",
-    "Custom LLMs Support"
+    "Custom LLMs Integration",
+    "Custom Requests support",
+    "24*7 Support",
   ]
 };
 
