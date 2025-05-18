@@ -54,7 +54,7 @@ export const vendors: VendorsTypes = [
   {
     vendor: "bitbucket",
     title: "Install on Bitbucket",
-    href: "https://production-gateway.snorkell.ai/api/bitbucket/installation-link",
+    href: "https://production-gateway.snorkell.ai/api/v2/bitbucket/install",
   },
   {
     title: "📖 How-to guide",
