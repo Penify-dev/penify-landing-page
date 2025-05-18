@@ -18,12 +18,12 @@ type VendorsTypes = {
 }[];
 
 export const teamItems: TeamItemsType[] = [
-  // {
-  //   img: suman,
-  //   username: "Suman Saurabh",
-  //   role: "Co-Founder, Developer",
-  //   linkedIn: "ssumansaurabh/",
-  // },
+  {
+    img: suman,
+    username: "Suman Saurabh",
+    role: "Co-Founder, Developer",
+    linkedIn: "ssumansaurabh/",
+  },
   {
     img: sunil,
     username: "Sunil Agarwal",
