@@ -54,7 +54,7 @@ export default function Header() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            SingIn
+            Sign in
           </Link>
 
           <button
