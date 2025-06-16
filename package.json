@@ -17,7 +17,7 @@
     "@tabler/icons-react": "^3.12.0",
     "@xyflow/react": "^12.0.4",
     "aos": "^2.3.4",
-    "mixpanel-browser": "^2.56.0",
+    "mixpanel-browser": "^2.62.0",
     "next": "^14.2.21",
     "next-seo": "^6.5.0",
     "next-sitemap": "^4.2.3",
