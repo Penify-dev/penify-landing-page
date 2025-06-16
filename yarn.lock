@@ -6304,6 +6304,7 @@ __metadata:
     schema-dts: "npm:^1.1.5"
     tailwindcss: "npm:^3.4.10"
     typescript: "npm:5.4.5"
+    vwo-smartcode-nextjs: "npm:^1.3.0"
     web-vitals: "npm:^4.2.4"
   languageName: unknown
   linkType: soft
@@ -6908,6 +6909,16 @@ __metadata:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 10c0/41a5bdd214df2f6c3ecf8622745e4a366c4adced864bc3c833739791aeeeb1838119af7daed4ba36428114b5c67dcda034a79c882e97e43c03e66a4dd7389942
+  languageName: node
+  linkType: hard
+
+"vwo-smartcode-nextjs@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "vwo-smartcode-nextjs@npm:1.3.0"
+  peerDependencies:
+    next: ">=9.0.0"
+    react: ">=16.8.0"
+  checksum: 10c0/bf7bfea9dbc73b61c252821dc980d00e8f27afcdcc8d070dc86380ed298825b8816987aedd879074fabece48287ffc7e15d89f600603173692a0ff9ef4824e13
   languageName: node
   linkType: hard
 

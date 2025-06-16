@@ -22,6 +22,7 @@ import { DefaultSeo } from 'next-seo';
 import seoConfig from '@/lib/seo.config';
 import { Graph, Organization, SoftwareApplication, WebSite, WithContext } from 'schema-dts';
 import { getQueryParameter, inHouseAnalytics } from "@/utils/gtag";
+import { VWOScript } from 'vwo-smartcode-nextjs';
 
 // Initialize analytics
 mp_init();
@@ -493,6 +494,7 @@ export default function App({ Component, pageProps }: AppProps) {
       />
 
       <Component {...pageProps} />
+      <VWOScript accountId="1105937" />
     </Fragment>
   );
 }
