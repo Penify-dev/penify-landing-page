@@ -1,3 +1,4 @@
+import akansha from "public/images/teams/akansha.webp";
 import suman from "public/images/teams/suman.webp";
 import sunil from "public/images/teams/sunil.webp";
 import popin from "public/images/teams/popin.webp";
@@ -18,17 +19,23 @@ type VendorsTypes = {
 }[];
 
 export const teamItems: TeamItemsType[] = [
-  // {
-  //   img: suman,
-  //   username: "Suman Saurabh",
-  //   role: "Co-Founder, Developer",
-  //   linkedIn: "ssumansaurabh/",
-  // },
   {
+    img: suman,
+    username: "Suman Saurabh",
+    role: "Co-Founder, Developer",
+    linkedIn: "ssumansaurabh/",
+  },
+   {
     img: sunil,
     username: "Sunil Agarwal",
     role: "Co-Founder, Developer",
     linkedIn: "sunilagwl5/",
+  },
+  {
+    img: akansha,
+    username: "Akansha Sinha",
+    role: "Co-Founder, Product Manager",
+    linkedIn: "akanshasinha19/",
   },
   {
     img: popin,
