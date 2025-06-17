@@ -13,6 +13,46 @@ export default function Banner() {
   });
   const [isLoading, setIsLoading] = useState(true);
 
+  // Function to format numbers with commas
+  const formatNumber = (num: number): string => {
+    return num.toLocaleString();
+  };
+
+  // Star rating component
+  const StarRating = ({ rating }: { rating: number }) => {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+    const emptyStars = 5 - Math.ceil(rating);
+
+    return (
+      <div className="flex items-center gap-0.5">
+        {/* Full stars */}
+        {Array.from({ length: fullStars }).map((_, index) => (
+          <IconStarFilled key={index} width={16} height={16} color="#38bdf8" />
+        ))}
+        
+        {/* Half star */}
+        {hasHalfStar && (
+          <div className="relative">
+            <IconStarFilled width={16} height={16} color="#1e293b" className="opacity-30" />
+            <div className="absolute top-0 left-0 overflow-hidden" style={{ width: '50%' }}>
+              <IconStarFilled width={16} height={16} color="#38bdf8" />
+            </div>
+          </div>
+        )}
+        
+        {/* Empty stars */}
+        {Array.from({ length: emptyStars }).map((_, index) => (
+          <IconStarFilled key={`empty-${index}`} width={16} height={16} color="#1e293b" className="opacity-30" />
+        ))}
+        
+        <span className="text-sm text-slate-300 ml-2 font-medium">
+          {rating}/5
+        </span>
+      </div>
+    );
+  };
+
   useEffect(() => {
     const getCount = async () => {
       try {
@@ -40,19 +80,15 @@ export default function Banner() {
       <div className="container mx-auto">
         <div className="mb-3 me-4 flex flex-col items-center justify-center gap-2 md:mb-0 md:flex-row md:gap-4">
           <div className="flex gap-x-1 sm:items-center">
-            <IconStarFilled width={18} color="#38bdf8" />
-            <IconStarFilled width={18} color="#38bdf8" />
-            <IconStarFilled width={18} color="#38bdf8" />
-            <IconStarFilled width={18} color="#38bdf8" />
-            <IconStarFilled width={18} color="#38bdf8" />
-            <p className="text-center text-sm font-normal text-slate-200 md:text-base xl:text-lg">
+            <StarRating rating={4.7} />
+            <p className="text-center text-sm font-normal text-slate-200 md:text-base xl:text-lg ml-3">
               Trusted globally by{" "}
               <strong className="inline-block min-w-[60px] text-center text-secondary-400">
-                {isLoading ? "..." : `${counter.users}`}
+                {isLoading ? "..." : `${formatNumber(counter.users)}`}
               </strong>{" "}
-              users and Installed on 
+              users and Installed on{" "}
               <strong className="inline-block min-w-[80px] text-center text-secondary-400">
-                {isLoading ? "..." : `${counter.repos}`}
+                {isLoading ? "..." : `${formatNumber(counter.repos)}`}
               </strong>{" "}
               repositories
             </p>

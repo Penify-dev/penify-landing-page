@@ -2,7 +2,7 @@ import { featureItems } from "@/utils/featureItems";
 import { IconExternalLink, IconChevronRight, IconSearch, IconX } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Element } from "react-scroll";
+// import { Element } from "react-scroll";
 import { useState } from "react";
 import { sendGAEvent } from "@next/third-parties/google";
 // import { mp_track_feature_zoom } from "@/lib/mixpanel";
@@ -61,8 +61,7 @@ export default function Features() {
 
   return (
     <section>
-      <Element
-        name="features"
+      <section
         id="features"
         className="w-full py-8 sm:py-12 overflow-hidden md:py-20 bg-gradient-to-b from-themeBg to-bannerBg"
       >
@@ -192,8 +191,7 @@ export default function Features() {
             </div>
           )}
         </div>
-      </Element>
-
+      </section>
       {/* Feature Zoom Modal */}
       {zoomedFeature !== null && (
         <div className="fixed inset-0 bg-themeBg/90 z-50 flex items-center justify-center p-3 sm:p-4 backdrop-blur-sm" onClick={closeZoom}>
