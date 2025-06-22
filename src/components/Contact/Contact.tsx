@@ -42,7 +42,7 @@ export default function Contact() {
                   </dd>
                 </div>
 
-                <div className="my-4 flex items-center space-x-2 transition-colors duration-200 ease-in hover:text-blue-600">
+{/*                 <div className="my-4 flex items-center space-x-2 transition-colors duration-200 ease-in hover:text-blue-600">
                   <dt className="flex-none">
                     <span className="sr-only">Phone Number</span>
                     <IconPhone className="w-5 md:w-7" />
@@ -58,7 +58,7 @@ export default function Contact() {
                     </Link>
                   </dd>
                 </div>
-
+ */}
                 <div className="flex space-x-2">
                   <dt className="flex-none">
                     <span className="sr-only">Address</span>
