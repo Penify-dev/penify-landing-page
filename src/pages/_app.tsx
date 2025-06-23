@@ -39,6 +39,18 @@ const ANALYTICS_EVENTS = {
   ERROR: "error",
 };
 
+/**
+ * The main App component that initializes and renders the application.
+ *
+ * This component is responsible for setting up various global configurations,
+ * handling user authentication, and managing analytics tracking across different
+ * pages and interactions. It also includes structured data for SEO purposes.
+ *
+ * @component
+ * @param {Object} Component - The Next.js page component to render.
+ * @param {Object} pageProps - The props passed to the page component.
+ * @returns {JSX.Element} The rendered application with all necessary configurations.
+ */
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
